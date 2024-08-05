@@ -1,0 +1,18 @@
+.hero {
+	width: 100%;
+	background-color: var(--bg-overlay-color);
+	color: var(--white);
+}
+
+.hero .d-grid {
+	justify-items: center;
+}
+
+.hero .d-grid>* {
+	grid-area: 1/1/1/1;
+}
+
+.hero div,
+.hero img {
+	border: 1px solid red;
+}
