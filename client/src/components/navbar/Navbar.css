@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+.navbar {
+	width: 100%;
+	background-color: var(--bg-overlay-color);
+	color: var(--white);
+}
+
+.navbar .navbar-item a {
+	color: var(--white);
+	font-size: 16px;
+	font-weight: 300;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+.navbar .navbar-item {
+	transition: all 0.8s;
+}
+
+.navbar .navbar-item:hover,
+.navbar .navbar-item:active {
+	background-color: var(--bg-color);
+	transition: all 0.8s;
+}
+
+.navbar .navbar-item:hover .sub {
+	display: block;
+}
+
+.navbar-item .sub {
+	display: none;
+	position: absolute;
+	background-color: var(--bg-color);
+	border: 1px solid var(--white);
+	top: calc(24px + 1.5rem);
+	border-top: 0;
+}
+
+.navbar-item:nth-child(3) .sub {
+	left: 505px
+}
+
+.navbar .sub .navbar-item a {
+	text-transform: none;
+}

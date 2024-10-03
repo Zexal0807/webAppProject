@@ -2,7 +2,7 @@ import './Hero.css'
 
 export default function Hero() {
     return (
-        <div className="hero pt-3 d-flex justify-content-center">
+        <div className="hero py-3 d-flex justify-content-center">
             <div className="col-8 d-flex flex-column justify-content-center">
 
                 <div className="col-12 d-flex justify-content-between align-items-center">
@@ -10,9 +10,9 @@ export default function Hero() {
                         src="images/Logo Ospedale Verona.png"
                         alt="Logo Ospedale di Verona"
                     />
-                    <h2>
+                    <span className='company'>
                         Azienda Ospedialiera Universitaria Integrata di Verona    
-                    </h2>
+                    </span>
                     <img className="col-1 rounded-circle"
                         src="images/Logo Università Verona.png"
                         alt="Logo Università di Verona"
@@ -21,11 +21,11 @@ export default function Hero() {
 
                 <div className="col-12 d-flex justify-content-center align-items-center">
                     <div className="col-4 d-grid align-items-center">
-                        <img className="col-11 rounded-circle"
+                        <img className="col-10 rounded-circle"
                             src="images/Logo MISTRA.jpg"
                             alt="Logo MISTRA"
                         />
-                        <div className="text-center text-primary">
+                        <div className="text-center text-primary image-text">
                             <span style={{color:"#3CBA25"}}>SE</span>
                             <span style={{color:"#F7D631"}}>XU</span>
                             <span style={{color:"#F77A0C"}}>AL </span>
@@ -36,32 +36,15 @@ export default function Hero() {
                         </div>
                     </div>
                     <div className="col-8 d-flex flex-column">
-                        <h1>
-                            CENTRO MISTRA
-                        </h1>
-                        <h2>
-                            <b>Centro</b>
-                        </h2>
-                        <h2>
-                            <b>M</b>ultidisciplinare
-                        </h2>
-                        <h2>
+                        <span className='title'>CENTRO MISTRA</span>
+                        <span className='subtitle'>
+                            <b>Centro</b><br/>
+                            <b>M</b>ultidisciplinare<br/>
                             <b>I</b>nfezioni <b>S</b>essualmente <b>Tra</b>smesse
-                        </h2>
+                        </span>
                     </div>
                 </div>
-
-                <div className="col-12 p-3"></div>
-
-                <div className="col-12">
-
-                    <a>
-                        HOME
-                    </a>
-
-                </div>
             </div>
-            
         </div>
     );
 }
