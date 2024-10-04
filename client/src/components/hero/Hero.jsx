@@ -3,24 +3,24 @@ import './Hero.css'
 export default function Hero() {
     return (
         <div className="hero py-3 d-flex justify-content-center">
-            <div className="col-8 d-flex flex-column justify-content-center">
+            <div className="col-11 col-sm-8 d-flex flex-column justify-content-center">
 
                 <div className="col-12 d-flex justify-content-between align-items-center">
-                    <img className="col-1 rounded-circle"
+                    <img className="col-3 col-sm-1 rounded-circle"
                         src="images/Logo Ospedale Verona.png"
                         alt="Logo Ospedale di Verona"
                     />
                     <span className='company'>
                         Azienda Ospedialiera Universitaria Integrata di Verona    
                     </span>
-                    <img className="col-1 rounded-circle"
+                    <img className="col-3 col-sm-1 rounded-circle"
                         src="images/Logo Università Verona.png"
                         alt="Logo Università di Verona"
                     />
                 </div>
 
-                <div className="col-12 d-flex justify-content-center align-items-center">
-                    <div className="col-4 d-grid align-items-center">
+                <div className="col-12 d-flex justify-content-center align-items-center flex-column flex-sm-row">
+                    <div className="col-10 col-sm-4 d-grid align-items-center">
                         <img className="col-10 rounded-circle"
                             src="images/Logo MISTRA.jpg"
                             alt="Logo MISTRA"
@@ -35,7 +35,8 @@ export default function Hero() {
                             <span style={{color:"#11BCF0"}}>TH</span>
                         </div>
                     </div>
-                    <div className="col-8 d-flex flex-column">
+
+                    <div className="col-12 col-sm-8 d-flex flex-column">
                         <span className='title'>CENTRO MISTRA</span>
                         <span className='subtitle'>
                             <b>Centro</b><br/>

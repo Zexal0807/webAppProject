@@ -36,3 +36,18 @@
 	font-size: 30px;
 	font-weight: 200;
 }
+
+@media screen and (max-width: 576px) {
+	.company {
+		font-size: 12px;
+		text-align: center;
+	}
+	.title {
+		font-size: 35px;
+		text-align: center;
+	}
+	.subtitle {
+		font-size: 23px;
+		text-align: center;
+	}
+}

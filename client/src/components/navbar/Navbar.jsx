@@ -86,10 +86,10 @@ export default function Navbar() {
 
     return (
         <div className="navbar pt-3 pb-0 d-flex justify-content-center">
-            <div className="col-8 d-flex flex-column justify-content-center">
-                <div className="col-12 d-flex justify-content-between">
+            <div className="col-11 col-sm-8 d-flex flex-column justify-content-center">
+                <div className="col-12 d-flex justify-content-between flex-wrap flex-sm-nowrap">
                     {pages.map((page, i) => renderItem(page, i))}
-                </div>
+                </div> 
             </div>
         </div>
     );
