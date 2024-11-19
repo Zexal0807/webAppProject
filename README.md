@@ -18,3 +18,13 @@ Vedendo la semplicità, ho deciso di togliere il content e aggiungere un Dinamic
 
 ho poi creato una API apposita per fare ikl findOne sulla base dello slug partendo da questo tutorial
 https://stackoverflow.com/questions/73261870/how-to-fetch-strapi-by-slug-and-how-to-populate-the-categories
+
+
+STRAPI è da eseguire in develop mode per poterlo modificare
+
+
+DASHBOARD STRAPI
+
+utenti:
+- roberto.gallina@studenti.univr.it - Aa12345678
+- davide.zanellato@studenti.univr.it - Aa12345678
