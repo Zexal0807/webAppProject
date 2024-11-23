@@ -376,7 +376,9 @@ export interface ApiPagePage extends Schema.CollectionType {
   attributes: {
     slug: Attribute.String;
     title: Attribute.String;
-    content: Attribute.DynamicZone<['components.section-title']>;
+    content: Attribute.DynamicZone<
+      ['components.section-title', 'components.text']
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

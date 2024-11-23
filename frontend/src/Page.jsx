@@ -1,49 +1,84 @@
-import { redirect, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Hero from "./components/hero/Hero";
 import Navbar from "./components/navbar/Navbar";
 
 export default function Page() {
-	const { pageId } = useParams();
+    const { pageId } = useParams();
+    const [content, setContent] = useState({
+        title: "", 
+        text: "",  // Aggiungi lo stato per il testo
+    });
 
-	const [content, setContent] = useState({
-		title: "",
-	});
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Costruisci l'URL con il filtro per lo slug
+                const url = `${process.env.REACT_APP_BACKEND_HOST}/api/pages?filters[slug][$eq]=${pageId}&populate[content]=*`;
+                console.log("Fetching URL:", url);
+        
+                const response = await fetch(url, {
+                    headers: {
+                        Authorization: `Bearer c39994527baf082628471c88491a46160acf68bf3cfd9aa3e1ccec4ae52affac58abd0d35f78a85dd1b2a24076db87fad0b7644f24db1b8ed8af31c147693d0541ec2f09d7077f568f95d292f3bd21a6b02c6e71f0255dc6886fb7db8c2dd3e217288c43693ebc4c1dbbfaf9b81ef1701320ae0c0de63e50dabaaa2451bde0d2`, // Sostituisci con il token corretto
+                    },
+                });
+        
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Dati ricevuti dall'API:", data);
+        
+                    // Estrai la prima pagina trovata
+                    if (data.data.length > 0) {
+                        const pageData = data.data[0].attributes;
+        
+                        // Estrai il titolo e il testo dal contenuto
+                        const titleSection = pageData.content[0]; // Primo elemento è il titolo
+                        const textSection = pageData.content[1];  // Secondo elemento è il testo
+        
+                        const sectionTitleValue = titleSection?.value || "Home";  // Titolo di fallback
+                        const textContent = textSection?.value || "";  // Testo di fallback
+        
+                        setContent({
+                            title: sectionTitleValue,
+                            text: textContent,  // Imposta il testo nello stato
+                        });
+        
+                        document.title = sectionTitleValue;
+                    } else {
+                        console.error("Nessuna pagina trovata con questo slug:", pageId);
+                        setContent({
+                            title: "Home",
+                            text: "",  // Testo di fallback
+                        });
+                        document.title = "Home"; // Titolo di fallback
+                    }
+                } else {
+                    console.error("Errore nella risposta dell'API:", response.status);
+                }
+            } catch (error) {
+                console.error("Errore durante il fetch:", error);
+                setContent({
+                    title: "Home",
+                    text: "",  // Testo di fallback
+                });
+                document.title = "Home"; // Titolo di fallback
+            }
+        };        
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try{
-				const response = await fetch(`${process.env.BACKEND_HOST}/api/pages/${pageId}`, {
-					headers: {
-						Authorization: `Bearer 2c9ff8461fe9ba60bd4ffe56e2493db713a7cac418f918d7f568c93ee48b9314365cee0fe07dec1402b8955b8cb05f0d88c60ff52462b1694e1884ceeaf6b5e40f56f54808afcfe7ff07ad71370cf9b1e3a068ff22c79257b2bf548e87acf5899a0f495b30bf62db8b70ef1b1ab1afbab93c581105596cd9af59233ee7583f16`,
-					}
-				});
-				if (response.ok) {
-					const data = await response.json();
-					setContent(data);
-				}
-			} catch(e) {
-				// redirect("/");
-				setContent({
-					title: "Home",
-					content: "CIAO",
-				});
-			};
-			console.log(content);
-			document.title = content.title;
-		};
+        fetchData();
+    }, [pageId]);
 
-		fetchData();
-	}, []);
-
-	return (
-		<>
-			<Hero />
-			<Navbar />
-			<div>{content.title}</div>
-
-			{/* Per ogni elemento dell'array del content, creo il component corrispondente */}
-		</>
-	);
+    return (
+        <>
+            <Hero />
+            <Navbar />
+            <div>
+                {/* Visualizza il titolo della pagina */}
+                <h1>{content.title}</h1>
+                {/* Visualizza il testo */}
+                <p>{content.text}</p>
+            </div>
+        </>
+    );
 }

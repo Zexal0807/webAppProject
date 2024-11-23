@@ -21,7 +21,8 @@
     "content": {
       "type": "dynamiczone",
       "components": [
-        "components.section-title"
+        "components.section-title",
+        "components.text"
       ]
     }
   }
