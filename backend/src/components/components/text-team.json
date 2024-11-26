@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_components_text_teams",
+  "info": {
+    "displayName": "TextTeam"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "text"
+    }
+  }
+}

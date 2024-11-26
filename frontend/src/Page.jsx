@@ -5,6 +5,10 @@ import Hero from "./components/hero/Hero";
 import Navbar from "./components/navbar/Navbar";
 import SectionTitle from "./components/sectionTitle/SectionTitle";
 import Text from "./components/text/Text";
+import Team from "./components/team/Team";
+import TitleTeam from "./components/titleTeam/TitleTeam";
+import TextTeam from "./components/textTeam/TextTeam";
+
 
 export default function Page() {
     const { pageId } = useParams();
@@ -47,6 +51,9 @@ export default function Page() {
     const componentMap = {
         "components.section-title": SectionTitle,  // Mappiamo 'components.section-title' al componente SectionTitle
         "components.text": Text,                    // Mappiamo 'components.text' al componente Text
+        "components.team": Team,
+        "components.title-team": TitleTeam,
+        "components.text-team": TextTeam,
     };
 
 

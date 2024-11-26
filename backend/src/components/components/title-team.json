@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_components_title_teams",
+  "info": {
+    "displayName": "TitleTeam"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "string"
+    }
+  }
+}
