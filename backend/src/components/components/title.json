@@ -1,7 +1,7 @@
 {
-  "collectionName": "components_components_title_teams",
+  "collectionName": "components_components_titles",
   "info": {
-    "displayName": "TitleTeam"
+    "displayName": "Title"
   },
   "options": {},
   "attributes": {

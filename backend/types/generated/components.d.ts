@@ -1,9 +1,9 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
-export interface ComponentsTitleTeam extends Schema.Component {
-  collectionName: 'components_components_title_teams';
+export interface ComponentsTitle extends Schema.Component {
+  collectionName: 'components_components_titles';
   info: {
-    displayName: 'TitleTeam';
+    displayName: 'Title';
   };
   attributes: {
     value: Attribute.String;
@@ -21,16 +21,6 @@ export interface ComponentsText extends Schema.Component {
   };
 }
 
-export interface ComponentsTextTeam extends Schema.Component {
-  collectionName: 'components_components_text_teams';
-  info: {
-    displayName: 'TextTeam';
-  };
-  attributes: {
-    value: Attribute.Text;
-  };
-}
-
 export interface ComponentsTeam extends Schema.Component {
   collectionName: 'components_components_teams';
   info: {
@@ -42,24 +32,12 @@ export interface ComponentsTeam extends Schema.Component {
   };
 }
 
-export interface ComponentsSectionTitle extends Schema.Component {
-  collectionName: 'components_components_section_titles';
-  info: {
-    displayName: 'SectionTitle';
-  };
-  attributes: {
-    value: Attribute.String;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
-      'components.title-team': ComponentsTitleTeam;
+      'components.title': ComponentsTitle;
       'components.text': ComponentsText;
-      'components.text-team': ComponentsTextTeam;
       'components.team': ComponentsTeam;
-      'components.section-title': ComponentsSectionTitle;
     }
   }
 }

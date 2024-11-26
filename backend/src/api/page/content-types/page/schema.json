@@ -21,11 +21,8 @@
     "content": {
       "type": "dynamiczone",
       "components": [
-        "components.section-title",
         "components.text",
-        "components.team",
-        "components.title-team",
-        "components.text-team"
+        "components.team"
       ]
     }
   }
