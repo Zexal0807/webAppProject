@@ -362,6 +362,53 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiLayoutLayout extends Schema.CollectionType {
+  collectionName: 'layouts';
+  info: {
+    singularName: 'layout';
+    pluralName: 'layouts';
+    displayName: 'Layout';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content1: Attribute.DynamicZone<
+      ['components.title', 'components.text', 'components.team']
+    >;
+    content2: Attribute.DynamicZone<
+      ['components.title', 'components.text', 'components.team']
+    >;
+    content3: Attribute.DynamicZone<
+      ['components.title', 'components.text', 'components.team']
+    >;
+    size: Attribute.Enumeration<['size1', 'size2-10', 'size6-6', 'size10-2']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'size1'>;
+    page: Attribute.Relation<
+      'api::layout.layout',
+      'manyToOne',
+      'api::page.page'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::layout.layout',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::layout.layout',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiPagePage extends Schema.CollectionType {
   collectionName: 'pages';
   info: {
@@ -376,7 +423,11 @@ export interface ApiPagePage extends Schema.CollectionType {
   attributes: {
     slug: Attribute.String;
     title: Attribute.String;
-    content: Attribute.DynamicZone<['components.text', 'components.team']>;
+    layouts: Attribute.Relation<
+      'api::page.page',
+      'oneToMany',
+      'api::layout.layout'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -823,6 +874,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::layout.layout': ApiLayoutLayout;
       'api::page.page': ApiPagePage;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;

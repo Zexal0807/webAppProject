@@ -6,4 +6,16 @@
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::page.page');
+module.exports = {
+    routes: [
+      {
+        method: 'GET',
+        path: '/pages/:slug',
+        handler: 'page.findPageBySlug',
+        config: {
+          auth: false, // Imposta a true se l'endpoint richiede autenticazione
+        },
+      },
+    ],
+  };
+  

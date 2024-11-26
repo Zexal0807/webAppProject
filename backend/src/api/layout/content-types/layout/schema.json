@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "layouts",
+  "info": {
+    "singularName": "layout",
+    "pluralName": "layouts",
+    "displayName": "Layout",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "content1": {
+      "type": "dynamiczone",
+      "components": [
+        "components.title",
+        "components.text",
+        "components.team"
+      ]
+    },
+    "content2": {
+      "type": "dynamiczone",
+      "components": [
+        "components.title",
+        "components.text",
+        "components.team"
+      ]
+    },
+    "content3": {
+      "type": "dynamiczone",
+      "components": [
+        "components.title",
+        "components.text",
+        "components.team"
+      ]
+    },
+    "size": {
+      "type": "enumeration",
+      "enum": [
+        "size1",
+        "size2-10",
+        "size6-6",
+        "size10-2"
+      ],
+      "default": "size1",
+      "required": true
+    },
+    "page": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page.page",
+      "inversedBy": "layouts"
+    }
+  }
+}

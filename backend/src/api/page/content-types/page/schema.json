@@ -18,12 +18,11 @@
     "title": {
       "type": "string"
     },
-    "content": {
-      "type": "dynamiczone",
-      "components": [
-        "components.text",
-        "components.team"
-      ]
+    "layouts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::layout.layout",
+      "mappedBy": "page"
     }
   }
 }
