@@ -17,7 +17,8 @@
       "components": [
         "components.title",
         "components.text",
-        "components.team"
+        "components.team",
+        "components.team-members"
       ]
     },
     "content2": {
@@ -25,7 +26,8 @@
       "components": [
         "components.title",
         "components.text",
-        "components.team"
+        "components.team",
+        "components.team-members"
       ]
     },
     "content3": {
@@ -33,7 +35,8 @@
       "components": [
         "components.title",
         "components.text",
-        "components.team"
+        "components.team",
+        "components.team-members"
       ]
     },
     "size": {

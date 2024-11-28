@@ -8,6 +8,11 @@
   "attributes": {
     "value": {
       "type": "string"
+    },
+    "members": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.team-members"
     }
   }
 }

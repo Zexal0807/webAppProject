@@ -10,18 +10,21 @@ module.exports = {
     async findPageBySlug(ctx) {
       const { slug } = ctx.params;
   
-      // Esegui una query sulla collection Page
       const page = await strapi.entityService.findMany('api::page.page', {
         filters: { slug },
         populate: {
           layouts: {
             populate: {
-              content1: true,
+              content1: {
+                populate: {
+                  members: true, 
+                },
+              },
               content2: true,
-              content3: true
-            }
-          }
-        }
+              content3: true,
+            },
+          },
+        },
       });
   
       if (!page || page.length === 0) {

@@ -29,6 +29,18 @@ export interface ComponentsTeam extends Schema.Component {
   };
   attributes: {
     value: Attribute.String;
+    members: Attribute.Component<'components.team-members', true>;
+  };
+}
+
+export interface ComponentsTeamMembers extends Schema.Component {
+  collectionName: 'components_components_team_members';
+  info: {
+    displayName: 'TeamMembers';
+  };
+  attributes: {
+    name: Attribute.String;
+    role: Attribute.String;
   };
 }
 
@@ -38,6 +50,7 @@ declare module '@strapi/types' {
       'components.title': ComponentsTitle;
       'components.text': ComponentsText;
       'components.team': ComponentsTeam;
+      'components.team-members': ComponentsTeamMembers;
     }
   }
 }
