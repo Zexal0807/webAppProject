@@ -18,7 +18,9 @@
         "components.title",
         "components.text",
         "components.team",
-        "components.team-members"
+        "components.team-members",
+        "components.image",
+        "components.video"
       ]
     },
     "content2": {
@@ -27,7 +29,9 @@
         "components.title",
         "components.text",
         "components.team",
-        "components.team-members"
+        "components.team-members",
+        "components.image",
+        "components.video"
       ]
     },
     "content3": {
@@ -36,7 +40,9 @@
         "components.title",
         "components.text",
         "components.team",
-        "components.team-members"
+        "components.team-members",
+        "components.image",
+        "components.video"
       ]
     },
     "size": {

@@ -2,13 +2,16 @@ import React from "react";
 import Title from "../title/Title";
 import Text from "../text/Text";
 import Team from "../team/Team";
-
+import Image from "../image/Image";
+import Video from "../video/Video";
 
 // Mappatura dei componenti
 const componentMap = {
 	"components.title": Title,
 	"components.text": Text,
 	"components.team": Team,
+	"components.image": Image,
+	"components.video": Video
 };
 
 export default function Layout({ layout }) {
@@ -24,7 +27,7 @@ export default function Layout({ layout }) {
                     return <Component key={index} value={elem.value} members={elem.members} />;
                 }
                 // Passa solo il valore se non ci sono membri da gestire
-                return <Component key={index} value={elem.value} />;
+                return <Component key={index} {...elem} />;
             }
             // Se il componente non esiste, renderizza un fallback (un semplice div)
             return <div key={index}>{elem.value}</div>;
