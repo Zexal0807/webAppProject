@@ -19,8 +19,8 @@ export default function Navbar() {
                 name: "Gonorrea",
                 url:"/gonorrea"
             },{
-                name: "Mycoplasmi ed Ureaplasm",
-                url:"/mycoplasmi"
+                name: "Mycoplasmi ed Ureaplasmi",
+                url:"/mycoplasma"
             },{
                 name: "HIV",
                 url:"/hiv"

@@ -1,18 +1,28 @@
 import React from "react";
-import TeamMembers from "../teamMembers/TeamMembers"; 
+import TeamMembers from "../teamMembers/TeamMembers";
 
 export default function Team({ value, members }) {
     return (
-        <div className="team-component">
-            <h4>{value}</h4>
-            <div className="team-members">
-                {members && members.length > 0 ? (
-                    members.map((member, index) => (
-                        <TeamMembers key={index} name={member.name} role={member.role} />
-                    ))
-                ) : (
-                    <p>Nessun membro trovato</p>
-                )}
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-12 mb-4">
+                    <div className="team-component border p-3 rounded shadow-sm">
+                        <h4 className="mb-3">{value ? value : "Nome del team non disponibile"}</h4>
+                        <div className="team-members">
+                            {members && members.length > 0 ? (
+                                <div className="row">
+                                    {members.map((member, index) => (
+                                        <div key={index} className="col-md-4 mb-3">
+                                            <TeamMembers name={member.name} role={member.role} />
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p>Nessun membro trovato</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

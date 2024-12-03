@@ -20,7 +20,10 @@
         "components.team",
         "components.team-members",
         "components.image",
-        "components.video"
+        "components.video",
+        "components.infection",
+        "components.day-times",
+        "components.times"
       ]
     },
     "content2": {
@@ -31,7 +34,10 @@
         "components.team",
         "components.team-members",
         "components.image",
-        "components.video"
+        "components.video",
+        "components.infection",
+        "components.day-times",
+        "components.times"
       ]
     },
     "content3": {
@@ -42,7 +48,10 @@
         "components.team",
         "components.team-members",
         "components.image",
-        "components.video"
+        "components.video",
+        "components.infection",
+        "components.day-times",
+        "components.times"
       ]
     },
     "size": {

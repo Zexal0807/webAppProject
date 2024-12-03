@@ -17,9 +17,16 @@ module.exports = {
             populate: {
               content1: {
                 populate: {
-                  members: true, 
+                    members: true,
+                    tableTimes: { 
+                        populate: {
+                            day: true, 
+                            startTime: true,
+                            endTime: true, 
+                        },
+                    },
                 },
-              },
+            },
               content2: true,
               content3: true,
             },

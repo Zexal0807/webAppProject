@@ -14,9 +14,22 @@ export interface ComponentsTitle extends Schema.Component {
   collectionName: 'components_components_titles';
   info: {
     displayName: 'Title';
+    description: '';
   };
   attributes: {
     value: Attribute.String;
+    align: Attribute.Enumeration<['left ', 'center ', 'right']>;
+  };
+}
+
+export interface ComponentsTimes extends Schema.Component {
+  collectionName: 'components_components_times';
+  info: {
+    displayName: 'Times';
+  };
+  attributes: {
+    value: Attribute.Text;
+    tableTimes: Attribute.Component<'components.day-times', true>;
   };
 }
 
@@ -54,6 +67,16 @@ export interface ComponentsTeamMembers extends Schema.Component {
   };
 }
 
+export interface ComponentsInfection extends Schema.Component {
+  collectionName: 'components_components_infections';
+  info: {
+    displayName: 'Infection';
+  };
+  attributes: {
+    value: Attribute.String;
+  };
+}
+
 export interface ComponentsImage extends Schema.Component {
   collectionName: 'components_components_images';
   info: {
@@ -66,15 +89,31 @@ export interface ComponentsImage extends Schema.Component {
   };
 }
 
+export interface ComponentsDayTimes extends Schema.Component {
+  collectionName: 'components_components_day_times';
+  info: {
+    displayName: 'DayTimes';
+    description: '';
+  };
+  attributes: {
+    day: Attribute.String;
+    startTime: Attribute.String;
+    endTime: Attribute.String;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
       'components.video': ComponentsVideo;
       'components.title': ComponentsTitle;
+      'components.times': ComponentsTimes;
       'components.text': ComponentsText;
       'components.team': ComponentsTeam;
       'components.team-members': ComponentsTeamMembers;
+      'components.infection': ComponentsInfection;
       'components.image': ComponentsImage;
+      'components.day-times': ComponentsDayTimes;
     }
   }
 }

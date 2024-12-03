@@ -4,6 +4,8 @@ import Text from "../text/Text";
 import Team from "../team/Team";
 import Image from "../image/Image";
 import Video from "../video/Video";
+import Infection from "../infection/Infection";
+import Times from "../times/Times";
 
 // Mappatura dei componenti
 const componentMap = {
@@ -11,29 +13,43 @@ const componentMap = {
 	"components.text": Text,
 	"components.team": Team,
 	"components.image": Image,
-	"components.video": Video
+	"components.video": Video,
+	"components.times": Times,
 };
 
 export default function Layout({ layout }) {
     const { size, content1, content2, content3 } = layout;
 
     const renderContent = (content) => {
-        return content.map((elem, index) => {
-            const Component = componentMap[elem.__component];
-            if (Component) {
-                // Se il componente esiste nella mappatura, controlla se ha un campo "members"
-                if (elem.__component === "components.team" && elem.members) {
-                    // Passa il campo members al componente Team
-                    return <Component key={index} value={elem.value} members={elem.members} />;
-                }
-                // Passa solo il valore se non ci sono membri da gestire
-                return <Component key={index} {...elem} />;
-            }
-            // Se il componente non esiste, renderizza un fallback (un semplice div)
-            return <div key={index}>{elem.value}</div>;
-        });
-    };
+		const infections = content.filter(elem => elem.__component === "components.infection");
 
+        if (infections.length > 0) {
+            // Passa i dati al componente Infection
+            return <Infection infections={infections} />;
+        }
+
+		return content.map((elem, index) => {
+			const Component = componentMap[elem.__component];
+			if (Component) {
+				// Gestione del componente `team`
+				if (elem.__component === "components.team" && elem.value && elem.members) {
+					return <Component key={index} value={elem.value} members={elem.members} />;
+				}
+				// Gestione del componente `times`
+				if (elem.__component === "components.times" && elem.tableTimes) {
+					return <Component key={index} value={elem.value} tableTimes={elem.tableTimes} />;
+				}
+				// Gestione del componente `title`
+				if (elem.__component === "components.title") {
+					return <Component key={index} value={elem.value} align={elem.align} />;
+				}
+				// Renderizza altri componenti generici
+				return <Component key={index} {...elem} />;
+			}
+			// Fallback per componenti non trovati
+			return <div key={index}>{elem.value}</div>;
+		});
+	};
 
 	switch (size) {
 		case "size1":

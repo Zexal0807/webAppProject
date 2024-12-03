@@ -381,7 +381,10 @@ export interface ApiLayoutLayout extends Schema.CollectionType {
         'components.team',
         'components.team-members',
         'components.image',
-        'components.video'
+        'components.video',
+        'components.infection',
+        'components.day-times',
+        'components.times'
       ]
     >;
     content2: Attribute.DynamicZone<
@@ -391,7 +394,10 @@ export interface ApiLayoutLayout extends Schema.CollectionType {
         'components.team',
         'components.team-members',
         'components.image',
-        'components.video'
+        'components.video',
+        'components.infection',
+        'components.day-times',
+        'components.times'
       ]
     >;
     content3: Attribute.DynamicZone<
@@ -401,7 +407,10 @@ export interface ApiLayoutLayout extends Schema.CollectionType {
         'components.team',
         'components.team-members',
         'components.image',
-        'components.video'
+        'components.video',
+        'components.infection',
+        'components.day-times',
+        'components.times'
       ]
     >;
     size: Attribute.Enumeration<['size1', 'size2-10', 'size6-6', 'size10-2']> &
