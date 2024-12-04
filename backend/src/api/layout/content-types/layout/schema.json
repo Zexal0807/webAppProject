@@ -23,7 +23,8 @@
         "components.video",
         "components.infection",
         "components.day-times",
-        "components.times"
+        "components.times",
+        "components.image-title"
       ]
     },
     "content2": {
@@ -37,7 +38,8 @@
         "components.video",
         "components.infection",
         "components.day-times",
-        "components.times"
+        "components.times",
+        "components.image-title"
       ]
     },
     "content3": {
@@ -51,7 +53,8 @@
         "components.video",
         "components.infection",
         "components.day-times",
-        "components.times"
+        "components.times",
+        "components.image-title"
       ]
     },
     "size": {

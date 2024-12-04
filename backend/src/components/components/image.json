@@ -11,6 +11,12 @@
     },
     "alt": {
       "type": "string"
+    },
+    "width": {
+      "type": "integer"
+    },
+    "height": {
+      "type": "integer"
     }
   }
 }

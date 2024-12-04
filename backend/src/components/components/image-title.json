@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_components_image_titles",
+  "info": {
+    "displayName": "ImageTitle",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.image"
+    },
+    "service": {
+      "type": "text"
+    }
+  }
+}

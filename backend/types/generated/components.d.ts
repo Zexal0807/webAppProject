@@ -86,6 +86,20 @@ export interface ComponentsImage extends Schema.Component {
   attributes: {
     value: Attribute.String;
     alt: Attribute.String;
+    width: Attribute.Integer;
+    height: Attribute.Integer;
+  };
+}
+
+export interface ComponentsImageTitle extends Schema.Component {
+  collectionName: 'components_components_image_titles';
+  info: {
+    displayName: 'ImageTitle';
+    description: '';
+  };
+  attributes: {
+    image: Attribute.Component<'components.image', true>;
+    service: Attribute.Text;
   };
 }
 
@@ -113,6 +127,7 @@ declare module '@strapi/types' {
       'components.team-members': ComponentsTeamMembers;
       'components.infection': ComponentsInfection;
       'components.image': ComponentsImage;
+      'components.image-title': ComponentsImageTitle;
       'components.day-times': ComponentsDayTimes;
     }
   }

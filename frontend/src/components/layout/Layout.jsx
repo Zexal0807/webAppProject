@@ -6,6 +6,8 @@ import Image from "../image/Image";
 import Video from "../video/Video";
 import Infection from "../infection/Infection";
 import Times from "../times/Times";
+import ImageTitle from "../imageTitle/ImageTitle";
+
 
 // Mappatura dei componenti
 const componentMap = {
@@ -15,6 +17,7 @@ const componentMap = {
 	"components.image": Image,
 	"components.video": Video,
 	"components.times": Times,
+	"components.image-title": ImageTitle,
 };
 
 export default function Layout({ layout }) {
@@ -43,6 +46,10 @@ export default function Layout({ layout }) {
 				if (elem.__component === "components.title") {
 					return <Component key={index} value={elem.value} align={elem.align} />;
 				}
+				// Gestione del componente `image-title`
+				if (elem.__component === "components.image-title" && elem.image && elem.service) {
+                    return <Component key={index} image={elem.image} service={elem.service} />;
+                }
 				// Renderizza altri componenti generici
 				return <Component key={index} {...elem} />;
 			}
