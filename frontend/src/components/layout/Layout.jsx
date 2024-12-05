@@ -82,6 +82,14 @@ export default function Layout({ layout }) {
 					<div className="col-2">{renderContent(content2)}</div>
 				</div>
 			);
+		case "size4-4-4":
+			return (
+				<div className="d-flex flex-row">
+					<div className="col-4">{renderContent(content1)}</div>
+					<div className="col-4">{renderContent(content2)}</div>
+					<div className="col-4">{renderContent(content3)}</div>
+				</div>
+			);
 		default:
 			return <></>;
 	}

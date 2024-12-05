@@ -416,7 +416,9 @@ export interface ApiLayoutLayout extends Schema.CollectionType {
         'components.image-title'
       ]
     >;
-    size: Attribute.Enumeration<['size1', 'size2-10', 'size6-6', 'size10-2']> &
+    size: Attribute.Enumeration<
+      ['size1', 'size2-10', 'size6-6', 'size10-2', 'size4-4-4']
+    > &
       Attribute.Required &
       Attribute.DefaultTo<'size1'>;
     page: Attribute.Relation<

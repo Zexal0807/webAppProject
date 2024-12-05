@@ -63,7 +63,8 @@
         "size1",
         "size2-10",
         "size6-6",
-        "size10-2"
+        "size10-2",
+        "size4-4-4"
       ],
       "default": "size1",
       "required": true
