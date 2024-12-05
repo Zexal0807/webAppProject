@@ -5,7 +5,7 @@ export default function App() {
 	return (
 		<Routes>
 			<Route path="/app" element={<>TEST APP</>} />
-			<Route path="/:pageId" element={<Page />} />
+			<Route path="/*" element={<Page />} />
 			<Route path="/" element={<Navigate to="/home" replace />} />
 		</Routes>
 	);

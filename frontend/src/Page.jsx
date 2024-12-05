@@ -1,4 +1,4 @@
-import { redirect, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Hero from "./components/hero/Hero";
@@ -6,51 +6,52 @@ import Navbar from "./components/navbar/Navbar";
 import Layouts from "./components/layout/Layout";
 
 export default function Page() {
-    const { pageId } = useParams();
+	const navigate = useNavigate();
 
-    const [title, setTitle] = useState();
-    const [layouts, setLayouts] = useState([]);
+	const { pathname } = useLocation();
+	let pageId = pathname.substring(1);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const url = `${process.env.REACT_APP_BACKEND_HOST}/api/pages/${pageId}`;
-        
-                const response = await fetch(url, {
-                    headers: {
-                        Authorization: `Bearer ${process.env.REACT_APP_FETCH_TOKEN}`,
-                    },
-                });
-        
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log("Dati ricevuti dall'API:", data);
+	const [title, setTitle] = useState();
+	const [layouts, setLayouts] = useState([]);
 
-                    setTitle(data.title);
-                    setLayouts(data.layouts);
-                }
-            } catch (error) {
-                redirect("/home")
-            }
-        };        
+	useEffect(() => {
+		const fetchData = async () => {
+			const url = `${process.env.REACT_APP_BACKEND_HOST}/api/find-page`;
 
-        fetchData();
-    }, [pageId]);
+			const response = await fetch(url, {
+				method: "POST",
+				body: JSON.stringify({ pageId }),
+				headers: {
+					Authorization: `Bearer ${process.env.REACT_APP_FETCH_TOKEN}`,
+					"Content-Type": "application/json",
+				},
+			});
+			if (response.ok) {
+				const data = await response.json();
+				console.log("Dati ricevuti dall'API:", data);
 
-    // Imposta il titolo della pagina
-    document.title = title;
+				setTitle(data.title);
+				setLayouts(data.layouts);
+			} else {
+				navigate("/home");
+			}
+		};
 
-    return (
-        <>
-            <Hero />
-            <Navbar />
-            <div className="col-11 col-md-8 m-auto">
-                {layouts.map((layout, index) => <Layouts 
-                    key={index}
-                    layout={layout}
-                />)}
-            </div>
-        </>
-    );
+		fetchData();
+	}, [pageId]);
 
+	// Imposta il titolo della pagina
+	document.title = title;
+
+	return (
+		<>
+			<Hero />
+			<Navbar />
+			<div className="col-11 col-md-8 m-auto">
+				{layouts.map((layout, index) => (
+					<Layouts key={index} layout={layout} />
+				))}
+			</div>
+		</>
+	);
 }

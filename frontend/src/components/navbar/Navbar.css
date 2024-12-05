@@ -34,10 +34,7 @@
 	border: 1px solid var(--white);
 	top: calc(24px + 1.5rem);
 	border-top: 0;
-}
-
-.navbar-item:nth-child(3) .sub {
-	left: 505px
+	margin-left: -10px;
 }
 
 .navbar .sub .navbar-item a {

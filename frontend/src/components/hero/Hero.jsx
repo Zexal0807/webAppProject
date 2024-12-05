@@ -7,14 +7,14 @@ export default function Hero() {
 
                 <div className="col-12 d-flex justify-content-between align-items-center">
                     <img className="col-3 col-sm-1 rounded-circle"
-                        src="images/Logo Ospedale Verona.png"
+                        src="/images/Logo Ospedale Verona.png"
                         alt="Logo Ospedale di Verona"
                     />
                     <span className='company'>
                         Azienda Ospedialiera Universitaria Integrata di Verona    
                     </span>
                     <img className="col-3 col-sm-1 rounded-circle"
-                        src="images/Logo Università Verona.png"
+                        src="/images/Logo Università Verona.png"
                         alt="Logo Università di Verona"
                     />
                 </div>
@@ -22,7 +22,7 @@ export default function Hero() {
                 <div className="col-12 d-flex justify-content-center align-items-center flex-column flex-sm-row">
                     <div className="col-10 col-sm-4 d-grid align-items-center">
                         <img className="col-10 rounded-circle"
-                            src="images/Logo MISTRA.jpg"
+                            src="/images/Logo MISTRA.jpg"
                             alt="Logo MISTRA"
                         />
                         <div className="text-center text-primary image-text">

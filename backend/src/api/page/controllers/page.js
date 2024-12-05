@@ -6,11 +6,10 @@
 
 module.exports = {
     async findPageBySlug(ctx) {
-        const { slug } = ctx.params;
-
+        const { pageId } = ctx.request.body;
         try {
             const page = await strapi.entityService.findMany('api::page.page', {
-                filters: { slug },
+                filters: { slug: pageId },
                 populate: {
                     layouts: {
                         populate: {
@@ -44,4 +43,43 @@ module.exports = {
             return ctx.internalServerError('Errore nel recupero della pagina.');
         }
     },
+
+    async find(ctx) {
+        try {
+            const pages = await strapi.entityService.findMany('api::page.page', {
+                fields: ['title', 'slug'],
+            });
+
+            const transformedPages = pages.map(page => ({
+                name: page.title,
+                url: page.slug,
+            }));
+            
+            const grouped = [];
+
+            transformedPages.forEach(page => {
+                // Trova il genitore per gli URL che iniziano con un prefisso comune
+                const parent = grouped.find(group => page.url.startsWith(group.url) && page.url !== group.url);
+        
+                if (parent) {
+                    // Se c'è un genitore, aggiungilo come sottopagina
+                    if (!parent.sub) parent.sub = [];
+                    parent.sub.push({ name: page.name, url: page.url });
+                } else {
+                    // Altrimenti, aggiungilo come una pagina principale
+                    grouped.push({ name: page.name, url: page.url });
+                }
+            });
+        
+            // Rimuove i sottopagine duplicati dai livelli principali
+            return grouped.map(page => {
+                if (page.sub) {
+                    page.sub = page.sub.filter(sub => !grouped.some(group => group.url === sub.url));
+                }
+                return page;
+            });
+        } catch (error) {
+            return [];
+        }
+    }
 };
