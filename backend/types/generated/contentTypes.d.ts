@@ -362,117 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiLayoutLayout extends Schema.CollectionType {
-  collectionName: 'layouts';
-  info: {
-    singularName: 'layout';
-    pluralName: 'layouts';
-    displayName: 'Layout';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    content1: Attribute.DynamicZone<
-      [
-        'components.title',
-        'components.text',
-        'components.team',
-        'components.team-members',
-        'components.image',
-        'components.video',
-        'components.infection',
-        'components.day-times',
-        'components.times',
-        'components.image-title'
-      ]
-    >;
-    content2: Attribute.DynamicZone<
-      [
-        'components.title',
-        'components.text',
-        'components.team',
-        'components.team-members',
-        'components.image',
-        'components.video',
-        'components.infection',
-        'components.day-times',
-        'components.times',
-        'components.image-title'
-      ]
-    >;
-    content3: Attribute.DynamicZone<
-      [
-        'components.title',
-        'components.text',
-        'components.team',
-        'components.team-members',
-        'components.image',
-        'components.video',
-        'components.infection',
-        'components.day-times',
-        'components.times',
-        'components.image-title'
-      ]
-    >;
-    size: Attribute.Enumeration<
-      ['size1', 'size2-10', 'size6-6', 'size10-2', 'size4-4-4']
-    > &
-      Attribute.Required &
-      Attribute.DefaultTo<'size1'>;
-    page: Attribute.Relation<
-      'api::layout.layout',
-      'manyToOne',
-      'api::page.page'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::layout.layout',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::layout.layout',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPagePage extends Schema.CollectionType {
-  collectionName: 'pages';
-  info: {
-    singularName: 'page';
-    pluralName: 'pages';
-    displayName: 'Page';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    slug: Attribute.String;
-    title: Attribute.String;
-    layouts: Attribute.Relation<
-      'api::page.page',
-      'oneToMany',
-      'api::layout.layout'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -899,6 +788,326 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiAnswerAnswer extends Schema.CollectionType {
+  collectionName: 'answers';
+  info: {
+    singularName: 'answer';
+    pluralName: 'answers';
+    displayName: 'Answer';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    text: Attribute.String;
+    score: Attribute.Float;
+    correction: Attribute.String;
+    question: Attribute.Relation<
+      'api::answer.answer',
+      'manyToOne',
+      'api::question.question'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::answer.answer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::answer.answer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCategoryCategory extends Schema.CollectionType {
+  collectionName: 'categories';
+  info: {
+    singularName: 'category';
+    pluralName: 'categories';
+    displayName: 'Category';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiLayoutLayout extends Schema.CollectionType {
+  collectionName: 'layouts';
+  info: {
+    singularName: 'layout';
+    pluralName: 'layouts';
+    displayName: 'Layout';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content1: Attribute.DynamicZone<
+      [
+        'components.title',
+        'components.text',
+        'components.team',
+        'components.team-members',
+        'components.image',
+        'components.video',
+        'components.infection',
+        'components.day-times',
+        'components.times',
+        'components.image-title'
+      ]
+    >;
+    content2: Attribute.DynamicZone<
+      [
+        'components.title',
+        'components.text',
+        'components.team',
+        'components.team-members',
+        'components.image',
+        'components.video',
+        'components.infection',
+        'components.day-times',
+        'components.times',
+        'components.image-title'
+      ]
+    >;
+    content3: Attribute.DynamicZone<
+      [
+        'components.title',
+        'components.text',
+        'components.team',
+        'components.team-members',
+        'components.image',
+        'components.video',
+        'components.infection',
+        'components.day-times',
+        'components.times',
+        'components.image-title'
+      ]
+    >;
+    size: Attribute.Enumeration<
+      ['size1', 'size2-10', 'size6-6', 'size10-2', 'size4-4-4']
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'size1'>;
+    page: Attribute.Relation<
+      'api::layout.layout',
+      'manyToOne',
+      'api::page.page'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::layout.layout',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::layout.layout',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPagePage extends Schema.CollectionType {
+  collectionName: 'pages';
+  info: {
+    singularName: 'page';
+    pluralName: 'pages';
+    displayName: 'Page';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    slug: Attribute.String;
+    title: Attribute.String;
+    layouts: Attribute.Relation<
+      'api::page.page',
+      'oneToMany',
+      'api::layout.layout'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiQuestionQuestion extends Schema.CollectionType {
+  collectionName: 'questions';
+  info: {
+    singularName: 'question';
+    pluralName: 'questions';
+    displayName: 'Question';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    text: Attribute.String;
+    category: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'api::category.category'
+    >;
+    test: Attribute.Relation<
+      'api::question.question',
+      'manyToOne',
+      'api::test.test'
+    >;
+    answers: Attribute.Relation<
+      'api::question.question',
+      'oneToMany',
+      'api::answer.answer'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSexSex extends Schema.CollectionType {
+  collectionName: 'sexes';
+  info: {
+    singularName: 'sex';
+    pluralName: 'sexes';
+    displayName: 'Sex';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::sex.sex', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::sex.sex', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTestTest extends Schema.CollectionType {
+  collectionName: 'tests';
+  info: {
+    singularName: 'test';
+    pluralName: 'tests';
+    displayName: 'Test';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    description: Attribute.String;
+    questions: Attribute.Relation<
+      'api::test.test',
+      'oneToMany',
+      'api::question.question'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTestExecutionTestExecution extends Schema.CollectionType {
+  collectionName: 'test_executions';
+  info: {
+    singularName: 'test-execution';
+    pluralName: 'test-executions';
+    displayName: 'TestExecution';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    age: Attribute.Integer;
+    sex: Attribute.Relation<
+      'api::test-execution.test-execution',
+      'oneToOne',
+      'api::sex.sex'
+    >;
+    test: Attribute.Relation<
+      'api::test-execution.test-execution',
+      'oneToOne',
+      'api::test.test'
+    >;
+    score: Attribute.Float;
+    IP: Attribute.String;
+    revision_date: Attribute.DateTime;
+    note: Attribute.String;
+    execution_time: Attribute.DateTime;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::test-execution.test-execution',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::test-execution.test-execution',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -909,8 +1118,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::layout.layout': ApiLayoutLayout;
-      'api::page.page': ApiPagePage;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -919,6 +1126,14 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::answer.answer': ApiAnswerAnswer;
+      'api::category.category': ApiCategoryCategory;
+      'api::layout.layout': ApiLayoutLayout;
+      'api::page.page': ApiPagePage;
+      'api::question.question': ApiQuestionQuestion;
+      'api::sex.sex': ApiSexSex;
+      'api::test.test': ApiTestTest;
+      'api::test-execution.test-execution': ApiTestExecutionTestExecution;
     }
   }
 }

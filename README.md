@@ -28,8 +28,15 @@ Il sito web è quindi composto da un'unica pagina dinamica, che tramire una appo
 
 ## Quiz
 
+Dopo aver implementato lo schema logico fornitoci, abiamo provveduto a creare diversi ruoli all'interno di Stapi in modo da consentirne l'accesso e l'uso in modo più sicuro.
+Abbiamo creato il ruolo di TestEditor esso può:
+- Vedere, modificare, cancellare e aggiungere Answer
+- Vedere, modificare, cancellare e aggiungere Question
+- Vedere, modificare, cancellare e aggiungere Test
+- Vedere e aggiungere Category
 
-
+Abbiamo creato il ruolo di Medico esso può:
+- Vedere i TestExecution
 
 
 ## How to start
@@ -44,6 +51,14 @@ cd backend
 npm run develop
 ```
 
-Usare le sequenti credenziali per poter accedere al pannello d'amministrazione di Strapi:
+Usare le sequenti credenziali per poter accedere al pannello d'amministrazione di Strapi come amministratore:
 - roberto.gallina@studenti.univr.it - Aa12345678
 - davide.zanellato@studenti.univr.it - Aa12345678
+
+Per accedere al pannello d'amministrazione di Strapi come editor dei test, ossia con la possibilità di creare, aggiornare o eliminare test, domande e risposte e creare nuove categoria alle domande usare le seguenti credenziali:
+- testeditor@gmail.com - Aa12345678
+
+
+
+Usare le sequenti credenziali per poter accedere al pannello d'amministrazione di Strapi come medico:
+- medico@gmail.com - Aa12345678
