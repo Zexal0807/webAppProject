@@ -67,6 +67,16 @@ export interface ComponentsTeamMembers extends Schema.Component {
   };
 }
 
+export interface ComponentsMap extends Schema.Component {
+  collectionName: 'components_components_maps';
+  info: {
+    displayName: 'Map';
+  };
+  attributes: {
+    value: Attribute.String;
+  };
+}
+
 export interface ComponentsInfection extends Schema.Component {
   collectionName: 'components_components_infections';
   info: {
@@ -125,6 +135,7 @@ declare module '@strapi/types' {
       'components.text': ComponentsText;
       'components.team': ComponentsTeam;
       'components.team-members': ComponentsTeamMembers;
+      'components.map': ComponentsMap;
       'components.infection': ComponentsInfection;
       'components.image': ComponentsImage;
       'components.image-title': ComponentsImageTitle;

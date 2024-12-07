@@ -6,6 +6,7 @@ import Image from "../image/Image";
 import Video from "../video/Video";
 import Infection from "../infection/Infection";
 import Times from "../times/Times";
+import Map from "../map/Map";
 import ImageTitle from "../imageTitle/ImageTitle";
 
 
@@ -17,6 +18,7 @@ const componentMap = {
 	"components.image": Image,
 	"components.video": Video,
 	"components.times": Times,
+	"components.map": Map,
 	"components.image-title": ImageTitle,
 };
 
