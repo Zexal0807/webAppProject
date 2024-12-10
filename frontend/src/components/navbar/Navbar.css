@@ -35,6 +35,7 @@
 	top: calc(24px + 1.5rem);
 	border-top: 0;
 	margin-left: -10px;
+	text-align: center;
 }
 
 .navbar .sub .navbar-item a {

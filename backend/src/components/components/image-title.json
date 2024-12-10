@@ -8,11 +8,13 @@
   "attributes": {
     "image": {
       "type": "component",
-      "repeatable": true,
+      "repeatable": false,
       "component": "components.image"
     },
     "service": {
-      "type": "text"
+      "type": "component",
+      "repeatable": false,
+      "component": "components.service"
     }
   }
 }

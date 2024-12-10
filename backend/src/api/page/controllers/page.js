@@ -23,7 +23,8 @@ module.exports = {
                                             endTime: true,
                                         },
                                     },
-                                    image: true, // Popolazione semplice per il campo immagine
+                                    image: true,
+                                    service: true, 
                                 },
                             },
                             content2: true,

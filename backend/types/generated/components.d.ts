@@ -67,6 +67,17 @@ export interface ComponentsTeamMembers extends Schema.Component {
   };
 }
 
+export interface ComponentsService extends Schema.Component {
+  collectionName: 'components_components_services';
+  info: {
+    displayName: 'Service';
+  };
+  attributes: {
+    value: Attribute.String;
+    link: Attribute.String;
+  };
+}
+
 export interface ComponentsMap extends Schema.Component {
   collectionName: 'components_components_maps';
   info: {
@@ -108,8 +119,8 @@ export interface ComponentsImageTitle extends Schema.Component {
     description: '';
   };
   attributes: {
-    image: Attribute.Component<'components.image', true>;
-    service: Attribute.Text;
+    image: Attribute.Component<'components.image'>;
+    service: Attribute.Component<'components.service'>;
   };
 }
 
@@ -135,6 +146,7 @@ declare module '@strapi/types' {
       'components.text': ComponentsText;
       'components.team': ComponentsTeam;
       'components.team-members': ComponentsTeamMembers;
+      'components.service': ComponentsService;
       'components.map': ComponentsMap;
       'components.infection': ComponentsInfection;
       'components.image': ComponentsImage;
