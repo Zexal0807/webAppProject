@@ -55,9 +55,9 @@ export default function Layout({ layout }) {
             );
         case "size2-10":
             return (
-                <div className="d-flex flex-row">
-                    <div className="col-2">{renderContent(content1)}</div>
-                    <div className="col-10">{renderContent(content2)}</div>
+                <div className="row">
+                    <div className="col-12 col-md-2 order-2 order-md-1 text-center">{renderContent(content1)}</div>
+                    <div className="col-12 col-md-10 order-1 order-md-2">{renderContent(content2)}</div>
                 </div>
             );
         case "size10-2":
