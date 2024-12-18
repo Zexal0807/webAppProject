@@ -25,7 +25,8 @@
         "components.day-times",
         "components.times",
         "components.image-title",
-        "components.map"
+        "components.map",
+        "components.quiz"
       ]
     },
     "content2": {
@@ -41,7 +42,8 @@
         "components.day-times",
         "components.times",
         "components.image-title",
-        "components.map"
+        "components.map",
+        "components.quiz"
       ]
     },
     "content3": {
@@ -57,7 +59,8 @@
         "components.day-times",
         "components.times",
         "components.image-title",
-        "components.map"
+        "components.map",
+        "components.quiz"
       ]
     },
     "size": {

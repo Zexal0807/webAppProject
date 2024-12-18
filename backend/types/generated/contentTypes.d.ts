@@ -879,7 +879,8 @@ export interface ApiLayoutLayout extends Schema.CollectionType {
         'components.day-times',
         'components.times',
         'components.image-title',
-        'components.map'
+        'components.map',
+        'components.quiz'
       ]
     >;
     content2: Attribute.DynamicZone<
@@ -894,7 +895,8 @@ export interface ApiLayoutLayout extends Schema.CollectionType {
         'components.day-times',
         'components.times',
         'components.image-title',
-        'components.map'
+        'components.map',
+        'components.quiz'
       ]
     >;
     content3: Attribute.DynamicZone<
@@ -909,7 +911,8 @@ export interface ApiLayoutLayout extends Schema.CollectionType {
         'components.day-times',
         'components.times',
         'components.image-title',
-        'components.map'
+        'components.map',
+        'components.quiz'
       ]
     >;
     size: Attribute.Enumeration<

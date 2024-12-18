@@ -1,23 +1,33 @@
 import React, { useReducer, useEffect } from "react";
-import axios from "axios";
 
 import { quizReducer, initialState } from "./QuizReducer";
 
-const QuizApp = () => {
+const Quiz = () => {
 	const [state, dispatch] = useReducer(quizReducer, initialState);
 
 	useEffect(() => {
 		// Fetch questions from API when component mounts
-		const fetchQuestions = async () => {
-			try {
-				const response = await axios.get("https://example.com/api/quiz"); // Replace with your API endpoint
-				dispatch({ type: "SET_QUESTIONS", payload: response.data });
-			} catch (error) {
-				console.error("Error fetching questions:", error);
+		const fetchData = async () => {
+			const url = `${process.env.REACT_APP_BACKEND_HOST}/api/quiz`;
+
+			const response = await fetch(url, {
+				method: "POST",
+				// body: JSON.stringify({ pageId }),
+				headers: {
+					Authorization: `Bearer ${process.env.REACT_APP_FETCH_TOKEN}`,
+					"Content-Type": "application/json",
+				},
+			});
+			if (response.ok) {
+				const data = await response.json();
+				console.log("Dati ricevuti dall'API:", data);
+
+				// setTitle(data.title);
+				// setLayouts(data.layouts);
 			}
 		};
 
-		fetchQuestions();
+		fetchData();
 	}, []);
 
 	const handleStartQuiz = () => {
@@ -37,14 +47,19 @@ const QuizApp = () => {
 	};
 
 	const handleSendResults = async () => {
-		try {
-			await axios.post("https://example.com/api/quiz/results", {
-				score: state.score,
-				answers: state.answers,
-			});
-			alert("Results sent successfully!");
-		} catch (error) {
-			console.error("Error sending results:", error);
+		const url = `${process.env.REACT_APP_BACKEND_HOST}/api/test-execution`;
+
+		const response = await fetch(url, {
+			method: "POST",
+			// body: JSON.stringify({ pageId }),
+			headers: {
+				Authorization: `Bearer ${process.env.REACT_APP_FETCH_TOKEN}`,
+				"Content-Type": "application/json",
+			},
+		});
+		if (response.ok) {
+			const data = await response.json();
+			console.log("Dati ricevuti dall'API:", data);
 		}
 	};
 
@@ -84,4 +99,4 @@ const QuizApp = () => {
 	);
 };
 
-export default QuizApp;
+export default Quiz;

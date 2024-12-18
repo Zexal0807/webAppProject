@@ -78,6 +78,16 @@ export interface ComponentsService extends Schema.Component {
   };
 }
 
+export interface ComponentsQuiz extends Schema.Component {
+  collectionName: 'components_components_quizzes';
+  info: {
+    displayName: 'Quiz';
+  };
+  attributes: {
+    value: Attribute.String;
+  };
+}
+
 export interface ComponentsMap extends Schema.Component {
   collectionName: 'components_components_maps';
   info: {
@@ -147,6 +157,7 @@ declare module '@strapi/types' {
       'components.team': ComponentsTeam;
       'components.team-members': ComponentsTeamMembers;
       'components.service': ComponentsService;
+      'components.quiz': ComponentsQuiz;
       'components.map': ComponentsMap;
       'components.infection': ComponentsInfection;
       'components.image': ComponentsImage;

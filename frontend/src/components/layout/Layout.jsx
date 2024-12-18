@@ -8,6 +8,7 @@ import Infection from "../infection/Infection";
 import Times from "../times/Times";
 import Map from "../map/Map";
 import ImageTitle from "../imageTitle/ImageTitle";
+import Quiz from "../quiz/Quiz";
 
 // Mappatura dei componenti
 const componentMap = {
@@ -20,6 +21,7 @@ const componentMap = {
 	"components.map": Map,
 	"components.image-title": ImageTitle,
 	"components.infection": Infection, // Aggiunto per gestire i componenti di tipo infection
+	"components.quiz": Quiz,
 };
 
 export default function Layout({ layout }) {

@@ -4,7 +4,6 @@ import Page from "./Page";
 export default function App() {
 	return (
 		<Routes>
-			<Route path="/app" element={<>TEST APP</>} />
 			<Route path="/*" element={<Page />} />
 			<Route path="/" element={<Navigate to="/home" replace />} />
 		</Routes>
