@@ -48,9 +48,9 @@ export default function Layout({ layout }) {
             return <div className="col-12">{renderContent(content1)}</div>;
         case "size6-6":
             return (
-                <div className="d-flex flex-row">
-                    <div className="col-6">{renderContent(content1)}</div>
-                    <div className="col-6">{renderContent(content2)}</div>
+                <div className="d-flex flex-row flex-wrap">
+                    <div className="col-12 col-sm-6">{renderContent(content1)}</div>
+                    <div className="col-12 col-sm-6">{renderContent(content2)}</div>
                 </div>
             );
         case "size2-10":

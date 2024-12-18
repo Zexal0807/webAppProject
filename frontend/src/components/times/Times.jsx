@@ -1,15 +1,24 @@
 import React from "react";
-import DayTimes from "./DayTimes";
+
+import "./Times.css";
 
 export default function Times({ value, tableTimes }) {
-    return (
-        <div className="times">
-            <p><b>{value}</b></p>
-            <div className="day-times-list">
-                {tableTimes.map((time, index) => (
-                    <DayTimes key={index} day={time.day} startTime={time.startTime} endTime={time.endTime} />
-                ))}
-            </div>
-        </div>
-    );
+	return (
+		<div className="times px-3 mb-4">
+			<h5>{value}</h5>
+			<div className="d-flex justify-content-center align-items-center">
+				<table className="col-10 col-sm-4">
+					{tableTimes.map((time, index) => (
+						<tr>
+							<td>{time.day}</td>
+							<td>
+								{time.startTime}{" "}
+								{time.endTime ? ` - ${time.endTime}` : ""}
+							</td>
+						</tr>
+					))}
+				</table>
+			</div>
+		</div>
+	);
 }
