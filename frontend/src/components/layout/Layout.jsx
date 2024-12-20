@@ -20,7 +20,7 @@ const componentMap = {
 	"components.times": Times,
 	"components.map": Map,
 	"components.image-title": ImageTitle,
-	"components.infection": Infection, // Aggiunto per gestire i componenti di tipo infection
+	"components.infection": Infection, 
 	"components.quiz": Quiz,
 };
 
@@ -57,9 +57,9 @@ export default function Layout({ layout }) {
             );
         case "size2-10":
             return (
-                <div className="row">
-                    <div className="col-12 col-md-2 order-2 order-md-1 text-center">{renderContent(content1)}</div>
-                    <div className="col-12 col-md-10 order-1 order-md-2">{renderContent(content2)}</div>
+                <div className="row mb-3">
+                    <div className="col-12 col-md-3 order-2 order-md-1 text-center mt-3 my-md-0 col-lg-3 col-xl-2">{renderContent(content1)}</div>
+                    <div className="col-12 col-md-9 order-1 order-md-2 col-lg-9 col-xl-10">{renderContent(content2)}</div>
                 </div>
             );
         case "size10-2":
@@ -71,10 +71,10 @@ export default function Layout({ layout }) {
             );
         case "size4-4-4":
             return (
-                <div className="d-flex flex-row">
-                    <div className="col-4">{renderContent(content1)}</div>
-                    <div className="col-4">{renderContent(content2)}</div>
-                    <div className="col-4">{renderContent(content3)}</div>
+                <div className="d-flex flex-column flex-md-row justify-content-center">
+                    <div className="col-12 col-md-4 col-lg-4 col-xl-auto p-2 text-center">{renderContent(content1)}</div>
+                    <div className="col-12 col-md-4 col-lg-4 col-xl-auto p-2 text-center">{renderContent(content2)}</div>
+                    <div className="col-12 col-md-4 col-lg-4 col-xl-auto p-2 text-center">{renderContent(content3)}</div>
                 </div>
             );
         default:

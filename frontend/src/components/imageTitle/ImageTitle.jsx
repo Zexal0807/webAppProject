@@ -22,20 +22,25 @@ export default function ImageTitle({ image, service }) {
         : image; // Se è un oggetto singolo, usalo direttamente
 
     return (
-        <div className="image-title-component d-flex justify-content-center align-items-center my-5">
-            {imageData && (
-                <div className="image-container me-4" ref={imageRef}>
-                    <Image
-                        value={imageData.value}
-                        alt={imageData.alt}
-                        height={imageData.height}
-                        width={imageData.width}
-                    />
-                </div>
-            )}
-            <div className="text-container p-4 w-50" style={{ height: `${imageHeight}px` }}>
-                <div className="d-flex align-items-center justify-content-center h-100">
-                    <Service value={service.value} link={service.link} />
+        <div className="container my-5">
+            <div className="row justify-content-center align-items-center">
+                {imageData && (
+                    <div className="col-auto col-md-auto col-lg-auto p-0 me-2" ref={imageRef}> 
+                        <Image
+                            value={imageData.value}
+                            alt={imageData.alt}
+                            height={imageData.height}
+                            width={imageData.width}
+                        />
+                    </div>
+                )}
+                <div
+                    className="col-6 col-md-6 text-container p-1"
+                    style={{ height: `${imageHeight}px` }}
+                >
+                    <div className="d-flex align-items-center justify-content-center h-100">
+                        <Service value={service.value} link={service.link} />
+                    </div>
                 </div>
             </div>
         </div>
