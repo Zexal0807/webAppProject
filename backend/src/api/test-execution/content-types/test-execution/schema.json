@@ -43,6 +43,12 @@
     "code": {
       "type": "string",
       "unique": true
+    },
+    "answers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::answer.answer",
+      "mappedBy": "test_execution"
     }
   }
 }

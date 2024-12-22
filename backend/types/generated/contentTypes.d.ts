@@ -808,6 +808,11 @@ export interface ApiAnswerAnswer extends Schema.CollectionType {
       'manyToOne',
       'api::question.question'
     >;
+    test_execution: Attribute.Relation<
+      'api::answer.answer',
+      'manyToOne',
+      'api::test-execution.test-execution'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1097,6 +1102,11 @@ export interface ApiTestExecutionTestExecution extends Schema.CollectionType {
     note: Attribute.String;
     execution_time: Attribute.DateTime;
     code: Attribute.String & Attribute.Unique;
+    answers: Attribute.Relation<
+      'api::test-execution.test-execution',
+      'oneToMany',
+      'api::answer.answer'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

@@ -26,6 +26,12 @@
       "relation": "manyToOne",
       "target": "api::question.question",
       "inversedBy": "answers"
+    },
+    "test_execution": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::test-execution.test-execution",
+      "inversedBy": "answers"
     }
   }
 }
