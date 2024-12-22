@@ -1,9 +1,7 @@
-import pluginPkg from '../../package.json';
 import pluginId from './pluginId';
 import Initializer from './components/Initializer';
 import { Search } from '@strapi/icons';
-
-
+import { prefixPluginTranslations } from '@strapi/helper-plugin';
 import { auth } from '@strapi/helper-plugin';
 
 export default {
@@ -17,7 +15,6 @@ export default {
       },
       Component: async () => {
         const component = await import('./pages/App');
-
         return component;
       },
       permissions: [],
@@ -29,7 +26,6 @@ export default {
       isReady: false,
       name: pluginId,
     });
-
     const user = auth.getUserInfo();
 
     if (!user)
@@ -48,4 +44,22 @@ export default {
   },
 
   bootstrap(app) { },
+
+  async registerTrads({ locales }) {
+    const importedTrads = await Promise.all(
+      locales.map((locale) => {
+        return import(`./translations/${locale}.json`)
+          .then(({ default: data }) => ({
+            data: prefixPluginTranslations(data, pluginId),
+            locale
+          }))
+          .catch(() => ({
+            data: {},
+            locale
+          }));
+      })
+    );
+
+    return Promise.resolve(importedTrads);
+  },
 };

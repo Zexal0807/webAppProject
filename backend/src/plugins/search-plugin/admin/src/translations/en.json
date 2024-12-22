@@ -1,0 +1,6 @@
+{
+  "plugin.name": "Search test",
+  "label.search": "Code",
+  "input.search": "Code to search",
+  "button.search": "Search"
+}
