@@ -25,7 +25,7 @@ const Homepage = () => {
     <Box padding={8} background="neutral100">
       <Typography variant="alpha">{formatMessage({id:'search-plugin.plugin.name'})}</Typography>
 
-      <div style={{display: 'flex'}}>
+      <div style={{display: 'flex', paddingTop:"1rem"}}>
         <div style={{width:"85%"}}>
           <TextInput
               placeholder={formatMessage({id:'search-plugin.input.search'})}
@@ -42,21 +42,26 @@ const Homepage = () => {
       </div>
 
       {results.length > 0 && (
-        <Box paddingTop={6}>
+        <div style={{paddingTop:"1rem"}}>
           <Typography variant="beta">Results:</Typography>
-          <ul>
-            {results.map((entry) => (
-              <li key={entry.id}>
+            <div style={{display:"flex", flexWrap:"wrap", paddingTop:"0.5rem"}}>
+                {results.map((result) => (
+                    <div 
+                      style={{width: "16%", paddingLeft:"0.5rem", paddingRight:"0.5rem"}}
+                      key={result.id}
+                    >
                 <Button
+                        style={{width: "100%", justifyContent:"center"}}
                   variant="secondary"
-                  onClick={() => setSelectedEntry(entry)}
+                        size="L"
+                        onClick={() => setSelectedEntry(result)}
                 >
-                  {entry.name}
+                        {result.code}
                 </Button>
-              </li>
+                    </div>
             ))}
-          </ul>
-        </Box>
+            </div>
+        </div>
       )}
 
       {selectedEntry && (
