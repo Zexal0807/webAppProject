@@ -2,5 +2,18 @@
   "plugin.name": "Cerca test",
   "label.search": "Codice",
   "input.search": "Inserisci il codice da cercare",
-  "button.search": "Cerca"
+  "button.search": "Cerca",
+  "results.title": "Risultati",
+  "details.title": "Dettaglio",
+  "label.code": "Codice",
+  "label.testname": "Test",
+  "label.testdescription": "Description",
+  "label.sex": "Sesso",
+  "label.age": "Età",
+  "label.ip": "Indirizzo IP",
+  "label.score": "Punteggio",
+  "label.questions": "Domande",
+  "label.revision_date": "Ultima revisione",
+  "label.note": "Annotazione",
+  "button.save": "Salva"
 }
