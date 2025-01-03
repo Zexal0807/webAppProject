@@ -1,8 +1,4 @@
-'use strict';
-
-/**
- * page controller
- */
+const answer = require("../../answer/controllers/answer");
 
 module.exports = {
     async findPageBySlug(ctx) {
@@ -24,7 +20,12 @@ module.exports = {
                                         },
                                     },
                                     image: true,
-                                    service: true, 
+                                    service: true,
+                                    questions: { // Popola le domande
+                                        populate: {
+                                            answers: true, // Popola le risposte associate
+                                        },
+                                    },
                                 },
                             },
                             content2: true,

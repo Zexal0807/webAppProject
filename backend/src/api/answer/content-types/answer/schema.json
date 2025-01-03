@@ -15,9 +15,6 @@
     "text": {
       "type": "string"
     },
-    "score": {
-      "type": "float"
-    },
     "correction": {
       "type": "string"
     },
@@ -32,6 +29,9 @@
       "relation": "manyToOne",
       "target": "api::test-execution.test-execution",
       "inversedBy": "answers"
+    },
+    "score": {
+      "type": "integer"
     }
   }
 }

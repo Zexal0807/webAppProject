@@ -4,11 +4,10 @@
   "info": {
     "singularName": "sex",
     "pluralName": "sexes",
-    "displayName": "Sex",
-    "description": ""
+    "displayName": "Sex"
   },
   "options": {
-    "draftAndPublish": false
+    "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {

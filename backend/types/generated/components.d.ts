@@ -82,9 +82,15 @@ export interface ComponentsQuiz extends Schema.Component {
   collectionName: 'components_components_quizzes';
   info: {
     displayName: 'Quiz';
+    description: '';
   };
   attributes: {
     value: Attribute.String;
+    questions: Attribute.Relation<
+      'components.quiz',
+      'oneToMany',
+      'api::question.question'
+    >;
   };
 }
 

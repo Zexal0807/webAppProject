@@ -15,11 +15,6 @@
     "age": {
       "type": "integer"
     },
-    "sex": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::sex.sex"
-    },
     "test": {
       "type": "relation",
       "relation": "oneToOne",
@@ -34,21 +29,25 @@
     "revision_date": {
       "type": "datetime"
     },
-    "note": {
-      "type": "string"
-    },
     "execution_time": {
       "type": "datetime"
-    },
-    "code": {
-      "type": "string",
-      "unique": true
     },
     "answers": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::answer.answer",
       "mappedBy": "test_execution"
+    },
+    "note": {
+      "type": "text"
+    },
+    "code": {
+      "type": "string"
+    },
+    "sex": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::sex.sex"
     }
   }
 }

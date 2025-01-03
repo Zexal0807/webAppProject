@@ -1,12 +1,18 @@
 {
   "collectionName": "components_components_quizzes",
   "info": {
-    "displayName": "Quiz"
+    "displayName": "Quiz",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "value": {
       "type": "string"
+    },
+    "questions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::question.question"
     }
   }
 }

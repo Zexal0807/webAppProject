@@ -801,7 +801,6 @@ export interface ApiAnswerAnswer extends Schema.CollectionType {
   };
   attributes: {
     text: Attribute.String;
-    score: Attribute.Float;
     correction: Attribute.String;
     question: Attribute.Relation<
       'api::answer.answer',
@@ -813,6 +812,7 @@ export interface ApiAnswerAnswer extends Schema.CollectionType {
       'manyToOne',
       'api::test-execution.test-execution'
     >;
+    score: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1029,15 +1029,15 @@ export interface ApiSexSex extends Schema.CollectionType {
     singularName: 'sex';
     pluralName: 'sexes';
     displayName: 'Sex';
-    description: '';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
     name: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::sex.sex', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::sex.sex', 'oneToOne', 'admin::user'> &
@@ -1086,11 +1086,6 @@ export interface ApiTestExecutionTestExecution extends Schema.CollectionType {
   };
   attributes: {
     age: Attribute.Integer;
-    sex: Attribute.Relation<
-      'api::test-execution.test-execution',
-      'oneToOne',
-      'api::sex.sex'
-    >;
     test: Attribute.Relation<
       'api::test-execution.test-execution',
       'oneToOne',
@@ -1099,13 +1094,18 @@ export interface ApiTestExecutionTestExecution extends Schema.CollectionType {
     score: Attribute.Float;
     IP: Attribute.String;
     revision_date: Attribute.DateTime;
-    note: Attribute.String;
     execution_time: Attribute.DateTime;
-    code: Attribute.String & Attribute.Unique;
     answers: Attribute.Relation<
       'api::test-execution.test-execution',
       'oneToMany',
       'api::answer.answer'
+    >;
+    note: Attribute.Text;
+    code: Attribute.String;
+    sex: Attribute.Relation<
+      'api::test-execution.test-execution',
+      'oneToOne',
+      'api::sex.sex'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
