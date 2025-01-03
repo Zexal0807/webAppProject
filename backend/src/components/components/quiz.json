@@ -6,13 +6,10 @@
   },
   "options": {},
   "attributes": {
-    "value": {
-      "type": "string"
-    },
-    "questions": {
+    "tests": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::question.question"
+      "target": "api::test.test"
     }
   }
 }

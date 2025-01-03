@@ -21,9 +21,13 @@ module.exports = {
                                     },
                                     image: true,
                                     service: true,
-                                    questions: { // Popola le domande
+                                    tests: { 
                                         populate: {
-                                            answers: true, // Popola le risposte associate
+                                            questions: {
+                                                populate: {
+                                                    answers: true,
+                                                },
+                                            },
                                         },
                                     },
                                 },

@@ -5,11 +5,13 @@ const Quiz = () => {
     const [state, dispatch] = useReducer(quizReducer, initialState);
     const [age, setAge] = useState("");
     const [sex, setSex] = useState(""); // Imposta un valore iniziale per il sesso
-    const [IP, setIP] = useState("192.168.1.1"); // IP statico di esempio
+    const [IP, setIP] = useState("192.168.1.1"); // IP statico
     const [code, setCode] = useState(""); // Codice test iniziale vuoto
     const [error, setError] = useState(""); // Stato per il messaggio di errore
+    const [tests, setTests] = useState([]); // Stato per memorizzare i test
+    const [selectedTest, setSelectedTest] = useState(null); // Stato per il test selezionato
 
-    /// Funzione per generare il codice del test in formato ISO+3lettere
+    // Funzione per generare il codice del test in formato ISO+3lettere
     const generateTestCode = () => {
         // Ottieni la data in formato ISO (anno-mese-giorno)
         const isoDate = new Date().toISOString().split('T')[0]; // Formato: YYYY-MM-DD
@@ -42,14 +44,15 @@ const Quiz = () => {
                     const data = await response.json();
                     console.log("Dati ricevuti dall'API:", data);
 
-                    const questions = data.layouts[0]?.content1?.find(
+                    // Estrai le domande e le risposte
+                    const quizComponent = data.layouts[0]?.content1?.find(
                         (c) => c.__component === "components.quiz"
-                    )?.questions;
+                    );
 
-                    if (questions && questions.length > 0) {
-                        dispatch({ type: "SET_QUESTIONS", payload: questions });
+                    if (quizComponent?.tests) {
+                        setTests(quizComponent.tests); // Salva tutti i test nello stato
                     } else {
-                        console.error("Nessuna domanda trovata.");
+                        console.error("Componente quiz non trovato o nessun test associato.");
                     }
                 } else {
                     console.error("Errore nella risposta dell'API:", response.statusText);
@@ -73,6 +76,12 @@ const Quiz = () => {
         const testCode = generateTestCode();
         setCode(testCode);  // Imposta il codice del test nello stato
 
+        // Seleziona un test casuale
+        const randomTest = tests[Math.floor(Math.random() * tests.length)];
+        setSelectedTest(randomTest);
+
+        // Imposta le domande del test selezionato nello stato globale
+        dispatch({ type: "SET_QUESTIONS", payload: randomTest.questions || [] });
         dispatch({ type: "START_QUIZ" });
     };
 
@@ -93,7 +102,7 @@ const Quiz = () => {
             data: {  
                 age,
                 sex: { id: sex },  
-                test: { id: "1" },  
+                test: { id: selectedTest.id },  
                 score: state.score,
                 IP: IP,
                 code,  // Usa il codice generato
@@ -185,6 +194,7 @@ const Quiz = () => {
 
     return (
         <div>
+            <h2>Test: {selectedTest.name}</h2>
             <h2>
                 Question {state.currentQuestionIndex + 1} / {state.questions.length}
             </h2>
