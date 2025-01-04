@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect, useState } from "react";
 import { quizReducer, initialState } from "./QuizReducer";
+import "./Quiz.css";
 
 const Quiz = () => {
     const [state, dispatch] = useReducer(quizReducer, initialState);
@@ -13,18 +14,12 @@ const Quiz = () => {
 
     // Funzione per generare il codice del test in formato ISO+3lettere
     const generateTestCode = () => {
-        // Ottieni la data in formato ISO (anno-mese-giorno)
         const isoDate = new Date().toISOString().split('T')[0]; // Formato: YYYY-MM-DD
-
-        // Genera 3 lettere casuali
         const randomLetters = Array.from({ length: 3 }, () =>
             String.fromCharCode(65 + Math.floor(Math.random() * 26)) // Lettere maiuscole A-Z
         ).join('');
-
-        // Combina le due parti (ISO + 3 lettere)
         return `${isoDate}+${randomLetters}`;
     };
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,17 +37,12 @@ const Quiz = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log("Dati ricevuti dall'API:", data);
-
-                    // Estrai le domande e le risposte
                     const quizComponent = data.layouts[0]?.content1?.find(
                         (c) => c.__component === "components.quiz"
                     );
 
                     if (quizComponent?.tests) {
                         setTests(quizComponent.tests); // Salva tutti i test nello stato
-                    } else {
-                        console.error("Componente quiz non trovato o nessun test associato.");
                     }
                 } else {
                     console.error("Errore nella risposta dell'API:", response.statusText);
@@ -67,7 +57,7 @@ const Quiz = () => {
 
     const handleStartQuiz = () => {
         if (!age || !sex) {
-            setError("Inserisci l'età e il sesso per continuare"); // Imposta errore
+            setError("Inserisci l'età e il sesso per continuare");
             return;
         }
         setError(""); // Resetta errore se i campi sono validi
@@ -97,7 +87,6 @@ const Quiz = () => {
     };
 
     const handleSendResults = async () => {
-        // Prepara i dati per il backend
         const testExecutionData = {
             data: {  
                 age,
@@ -105,7 +94,7 @@ const Quiz = () => {
                 test: { id: selectedTest.id },  
                 score: state.score,
                 IP: IP,
-                code,  // Usa il codice generato
+                code,  
                 execution_time: new Date().toISOString(),
                 answers: state.answers.map((answer) => ({
                     id: state.questions[answer.questionIndex].id,
@@ -113,8 +102,6 @@ const Quiz = () => {
                 })),
             },
         };
-
-        console.log("Dati da inviare:", testExecutionData.data);
 
         try {
             const url = `${process.env.REACT_APP_BACKEND_HOST}/api/test-executions`;
@@ -128,15 +115,14 @@ const Quiz = () => {
             });
 
             if (!response.ok) {
-                const errorData = await response.json();  // Ottieni il corpo dell'errore
-                console.error("Errore nell'invio dei risultati:", errorData);  // Visualizza i dettagli dell'errore
+                const errorData = await response.json();
+                console.error("Errore nell'invio dei risultati:", errorData);
                 alert("Errore nell'invio dei risultati.");
             } else {
                 const data = await response.json();
                 console.log("Risultati inviati con successo:", data);
                 alert("Risultati inviati con successo!");
             }
-            
         } catch (error) {
             console.error("Errore durante l'invio:", error);
             alert("Errore durante l'invio dei risultati.");
@@ -145,66 +131,128 @@ const Quiz = () => {
 
     if (!state.isQuizStarted && !state.isQuizFinished) {
         return (
-            <div>
-                <div>
-                    <label>
-                        Età:
-                        <input
-                            type="number"
-                            value={age}
-                            onChange={(e) => setAge(e.target.value)}
-                            placeholder="Inserisci la tua età"
-                        />
-                    </label>
+            <div className="container mt-4 mb-5">
+                <div className="border rounded p-4 shadow-sm">
+                <h4 className="mb-4">Inserisci i dati per iniziare</h4>
+                    <div className="row mb-3">
+                        <div className="col-md-6">
+                            <div className="form-group">
+                                <label>Età</label>
+                                <input
+                                    type="number"
+                                    value={age}
+                                    onChange={(e) => setAge(e.target.value)}
+                                    className="form-control"
+                                    placeholder="Inserisci la tua età"
+                                />
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="form-group">
+                                <label>Sesso</label>
+                                <select
+                                    value={sex}
+                                    onChange={(e) => setSex(e.target.value)}
+                                    className="form-control"
+                                >
+                                    <option value="">Seleziona il sesso</option>
+                                    <option value="1">Maschio</option>
+                                    <option value="2">Femmina</option>
+                                    <option value="3">Altro</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    {error && <p className="text-danger">{error}</p>}
+                    <button 
+                    className="btn custom-btn btn-block" onClick={handleStartQuiz}>Invio</button>
                 </div>
-                <div>
-                    <label>
-                        Sesso:
-                        <select
-                            value={sex}
-                            onChange={(e) => setSex(e.target.value)}
-                        >
-                            <option value="">Seleziona il sesso</option>
-                            <option value="1">Maschio</option>
-                            <option value="2">Femmina</option>
-                            <option value="3">Altro</option>
-                        </select>
-                    </label>
-                </div>
-                {error && <p style={{ color: "red" }}>{error}</p>} {/* Mostra errore */}
-                <button onClick={handleStartQuiz}>Start Quiz</button>
             </div>
         );
     }
 
     if (state.isQuizFinished) {
         return (
-            <div>
-                <h2>Quiz Finished!</h2>
-                <p>
-                    Your score: {state.score} / {state.questions.length}
-                </p>
-                <p>Il codice del tuo test è: {code}</p>
-                <button onClick={handleSendResults}>Send Results</button>
+            <div className="container mt-4 mb-5">
+                <div className="border rounded p-4 shadow-sm">
+                    <h3 className="text-center mb-4"><strong>Quiz completato!</strong></h3>
+                    <p className="lead text-center mb-4">
+                        Il tuo punteggio: <strong>{state.score} / {state.questions.length}</strong>
+                    </p>
+                    <p className="text-center mb-4">
+                        <strong>Il codice del tuo test:</strong> {code}
+                    </p>
+                    <h4 className="mb-3"><strong>Le tue risposte:</strong></h4>
+                    <ul className="list-group mb-2">
+                        {state.questions.map((question, index) => {
+                            const givenAnswer = state.answers[index]?.answer;
+                            const correction = state.answers[index]?.correction;
+                            const isCorrect = correction === null; // Se la correzione è null, la risposta è corretta
+                            const isIncorrect = correction !== null; // Se c'è una correzione, la risposta è errata
+
+                            // Imposta la classe di sfondo in base alla correttezza della risposta
+                            let answerClass = "list-group-item border-top mb-3 rounded";
+                            if (isCorrect) {
+                                answerClass += " bg-success text-white"; // Verde per risposta corretta
+                            } else if (isIncorrect) {
+                                answerClass += " bg-danger text-white"; // Rosso per risposta sbagliata
+                            }
+
+                            return (
+                                <li key={index} className={answerClass}>
+                                    <div className="mb-2">
+                                        <p><strong>Domanda {index + 1}:</strong> {question.text}</p>
+                                    </div>
+                                    <div className="mb-2">
+                                        <p><strong>Risposta data:</strong> {givenAnswer || "Nessuna risposta data"}</p>
+                                    </div>
+                                    {correction && (
+                                        <div className="mb-2">
+                                            <p><strong>Errato:</strong> {correction}</p>
+                                        </div>
+                                    )}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                    <div className="d-grid">
+                        <button 
+                            className="btn custom-btn" 
+                            onClick={handleSendResults}>
+                            Invia risultati
+                        </button>
+                    </div>
+                </div>
             </div>
         );
     }
-
+    
     const currentQuestion = state.questions[state.currentQuestionIndex];
 
     return (
-        <div>
-            <h2>Test: {selectedTest.name}</h2>
-            <h2>
-                Question {state.currentQuestionIndex + 1} / {state.questions.length}
-            </h2>
-            <p>{currentQuestion?.text}</p>
-            <div>
-                {currentQuestion?.answers.map((answer, index) => (
-                    <button key={index} onClick={() => handleAnswer(answer.text)}>
-                        {answer.text}
-                    </button>
-                ))}
+        <div className="container mt-4 mb-5">
+            <div className="border rounded p-4 shadow-sm">
+                <h3 className="mb-4 text-center"><strong>Test: {selectedTest.name}</strong></h3>
+                <div className="form-group">
+                    <h5 className="mb-2"><strong>Domanda {state.currentQuestionIndex + 1} / {state.questions.length}</strong></h5>
+                    <p>
+                        {currentQuestion?.text}
+                    </p>
+                </div>
+                <div className="form-group">
+                    <h5 className="mb-2"><strong>Seleziona una risposta:</strong></h5>
+                    <div className="d-grid gap-3">
+                        {currentQuestion?.answers.map((answer, index) => (
+                            <button 
+                                key={index} 
+                                className="btn custom-btn"
+                                onClick={() => handleAnswer(answer.text)}
+                            >
+                                {answer.text}
+                            </button>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );

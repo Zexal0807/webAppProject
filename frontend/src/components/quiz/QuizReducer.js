@@ -15,12 +15,12 @@ export const quizReducer = (state, action) => {
             return { ...state, isQuizStarted: true, currentQuestionIndex: 0, answers: [], score: 0 };
         case "ANSWER_QUESTION":
             const { questionIndex, answer } = action.payload;
-            const isCorrect = state.questions[questionIndex].answers.some(
-                (ans) => ans.text === answer && ans.score === 1
-            );
+            const selectedAnswer = state.questions[questionIndex].answers.find(ans => ans.text === answer);
+            const isCorrect = selectedAnswer?.score === 1;
+            const correction = isCorrect ? null : selectedAnswer?.correction; // Se non corretta, prendi la correzione
             return {
                 ...state,
-                answers: [...state.answers, { questionIndex, answer }],
+                answers: [...state.answers, { questionIndex, answer, correction }],
                 score: isCorrect ? state.score + 1 : state.score,
                 currentQuestionIndex: state.currentQuestionIndex + 1,
             };
