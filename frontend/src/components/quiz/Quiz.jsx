@@ -69,6 +69,7 @@ const Quiz = () => {
         // Seleziona un test casuale
         const randomTest = tests[Math.floor(Math.random() * tests.length)];
         setSelectedTest(randomTest);
+        console.log("Test selezionato:", randomTest);  // Debug
 
         // Imposta le domande del test selezionato nello stato globale
         dispatch({ type: "SET_QUESTIONS", payload: randomTest.questions || [] });
@@ -96,12 +97,19 @@ const Quiz = () => {
                 IP: IP,
                 code,  
                 execution_time: new Date().toISOString(),
-                answers: state.answers.map((answer) => ({
-                    id: state.questions[answer.questionIndex].id,
-                    givenAnswer: answer.answer,
-                })),
+                answers: state.answers.map((answer, index) => {
+                    const question = state.questions[index]; // Prendi la domanda corrente
+                    const selectedAnswer = question.answers.find(a => a.text === answer.answer); // Trova la risposta selezionata
+                
+                    return {
+                        id: selectedAnswer?.id, // ID della risposta selezionata
+                        givenAnswer: answer.answer, // Risposta data
+                    };
+                }),
             },
         };
+
+        console.log("Dati inviati al backend:", testExecutionData); // Log dei dati inviati per debug
 
         try {
             const url = `${process.env.REACT_APP_BACKEND_HOST}/api/test-executions`;
@@ -113,6 +121,11 @@ const Quiz = () => {
                 },
                 body: JSON.stringify(testExecutionData),
             });
+
+            if (!selectedTest) {
+                console.error("Nessun test selezionato!");
+                return;
+            }
 
             if (!response.ok) {
                 const errorData = await response.json();
