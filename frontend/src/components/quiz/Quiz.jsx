@@ -3,7 +3,10 @@ import { quizReducer, initialState } from "./QuizReducer";
 import "./Quiz.css";
 
 const Quiz = () => {
+    // Gestione dello stato globale del quiz con `useReducer`
     const [state, dispatch] = useReducer(quizReducer, initialState);
+
+     // Stati locali per i dati dell'utente e configurazione del test
     const [age, setAge] = useState("");
     const [sex, setSex] = useState(""); // Imposta un valore iniziale per il sesso
     const [IP, setIP] = useState("192.168.1.1"); // IP statico
@@ -14,18 +17,20 @@ const Quiz = () => {
 
     // Funzione per generare il codice del test in formato ISO+3lettere
     const generateTestCode = () => {
-        const isoDate = new Date().toISOString().split('T')[0]; // Formato: YYYY-MM-DD
+        const isoDate = new Date().toISOString().split('T')[0]; // Formato data ISO (YYYY-MM-DD)
         const randomLetters = Array.from({ length: 3 }, () =>
-            String.fromCharCode(65 + Math.floor(Math.random() * 26)) // Lettere maiuscole A-Z
+            String.fromCharCode(65 + Math.floor(Math.random() * 26)) // Genera lettere maiuscole casuali A-Z
         ).join('');
-        return `${isoDate}+${randomLetters}`;
+        return `${isoDate}+${randomLetters}`; // Restituisce il codice completo
     };
 
+    // Effetto per caricare i test dal backend all'avvio
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const url = `${process.env.REACT_APP_BACKEND_HOST}/api/find-page`;
 
+                // Effettua una richiesta POST per ottenere i dati del quiz
                 const response = await fetch(url, {
                     method: "POST",
                     body: JSON.stringify({ pageId: "quiz" }),
@@ -35,6 +40,7 @@ const Quiz = () => {
                     },
                 });
 
+                // Se la risposta è positiva, aggiorna lo stato con i test ricevuti
                 if (response.ok) {
                     const data = await response.json();
                     const quizComponent = data.layouts[0]?.content1?.find(
@@ -55,8 +61,9 @@ const Quiz = () => {
         fetchData();
     }, []);
 
+    // Gestione dell'avvio del quiz
     const handleStartQuiz = () => {
-        if (!age || !sex) {
+        if (!age || !sex) { // Controlla che i campi obbligatori siano compilati
             setError("Inserisci l'età e il sesso per continuare");
             return;
         }
@@ -76,18 +83,23 @@ const Quiz = () => {
         dispatch({ type: "START_QUIZ" });
     };
 
+    // Gestione della selezione delle risposte
     const handleAnswer = (answer) => {
+        // Invia la risposta selezionata al reducer
         dispatch({
             type: "ANSWER_QUESTION",
             payload: { questionIndex: state.currentQuestionIndex, answer },
         });
 
+        // Se è l'ultima domanda, termina il quiz
         if (state.currentQuestionIndex === state.questions.length - 1) {
             dispatch({ type: "FINISH_QUIZ" });
         }
     };
 
+    // Funzione per inviare i risultati del quiz al backend
     const handleSendResults = async () => {
+        // Prepara i dati da inviare
         const testExecutionData = {
             data: {  
                 age,
@@ -108,8 +120,6 @@ const Quiz = () => {
                 }),
             },
         };
-
-        console.log("Dati inviati al backend:", testExecutionData); // Log dei dati inviati per debug
 
         try {
             const url = `${process.env.REACT_APP_BACKEND_HOST}/api/test-executions`;
@@ -142,31 +152,36 @@ const Quiz = () => {
         }
     };
 
+    // Ritorno per la schermata di inserimento dei dati iniziali
     if (!state.isQuizStarted && !state.isQuizFinished) {
         return (
             <div className="container mt-4 mb-5">
                 <div className="border rounded p-4 shadow-sm">
                 <h4 className="mb-4">Inserisci i dati per iniziare</h4>
                     <div className="row mb-3">
+
+                        {/* Campo di input per l'età */}
                         <div className="col-md-6">
                             <div className="form-group">
                                 <label>Età</label>
                                 <input
                                     type="number"
                                     value={age}
-                                    onChange={(e) => setAge(e.target.value)}
+                                    onChange={(e) => setAge(e.target.value)} // Aggiorna lo stato quando cambia
                                     className="form-control"
                                     placeholder="Inserisci la tua età"
                                 />
                             </div>
                         </div>
+
+                        {/* Campo di selezione per il sesso */}
                         <div className="col-md-6">
                             <div className="form-group">
                                 <label>Sesso</label>
                                 <select
                                     value={sex}
-                                    onChange={(e) => setSex(e.target.value)}
-                                    className="form-control"
+                                    onChange={(e) => setSex(e.target.value)} // Aggiorna lo stato quando cambia
+                                    className="form-select responsive-select"
                                 >
                                     <option value="">Seleziona il sesso</option>
                                     <option value="1">Maschio</option>
@@ -176,30 +191,49 @@ const Quiz = () => {
                             </div>
                         </div>
                     </div>
+                    {/* Messaggio di errore se i dati inseriti non sono validi */}
                     {error && <p className="text-danger">{error}</p>}
                     <button 
-                    className="btn custom-btn btn-block" onClick={handleStartQuiz}>Invio</button>
+                    className="btn custom-btn btn-block"
+                    onClick={handleStartQuiz} // Funzione chiamata al click
+                    >
+                        Invio</button>
                 </div>
             </div>
         );
     }
 
+    // Ritorno per la schermata di fine quiz
     if (state.isQuizFinished) {
         return (
             <div className="container mt-4 mb-5">
                 <div className="border rounded p-4 shadow-sm">
-                    <h3 className="text-center mb-4"><strong>Quiz completato!</strong></h3>
+
+                    {/* Messaggio di fine quiz */}
+                    <h3 className="text-center mb-4">
+                        <strong>Quiz completato!</strong>
+                    </h3>
+
+                    {/* Mostra il punteggio dell'utente */}
                     <p className="lead text-center mb-4">
                         Il tuo punteggio: <strong>{state.score} / {state.questions.length}</strong>
                     </p>
+
+                    {/* Codice del test */}
                     <p className="text-center mb-4">
                         <strong>Il codice del tuo test:</strong> {code}
                     </p>
-                    <h4 className="mb-3"><strong>Le tue risposte:</strong></h4>
+
+                    {/* Intestazione per la lista delle risposte */}
+                    <h4 className="mb-3">
+                        <strong>Le tue risposte:</strong>
+                    </h4>
+
+                    {/* Lista delle domande e risposte */}
                     <ul className="list-group mb-2">
                         {state.questions.map((question, index) => {
-                            const givenAnswer = state.answers[index]?.answer;
-                            const correction = state.answers[index]?.correction;
+                            const givenAnswer = state.answers[index]?.answer; // Risposta fornita dall'utente
+                            const correction = state.answers[index]?.correction; // Correzione in caso di errore
                             const isCorrect = correction === null; // Se la correzione è null, la risposta è corretta
                             const isIncorrect = correction !== null; // Se c'è una correzione, la risposta è errata
 
@@ -211,14 +245,20 @@ const Quiz = () => {
                                 answerClass += " bg-danger text-white"; // Rosso per risposta sbagliata
                             }
 
+                            // Elemento della lista con dettagli della domanda e risposta
                             return (
                                 <li key={index} className={answerClass}>
+                                    {/* Testo della domanda */}
                                     <div className="mb-2">
                                         <p><strong>Domanda {index + 1}:</strong> {question.text}</p>
                                     </div>
+
+                                    {/* Risposta fornita */}
                                     <div className="mb-2">
                                         <p><strong>Risposta data:</strong> {givenAnswer || "Nessuna risposta data"}</p>
                                     </div>
+
+                                    {/* Correzione se la risposta è errata */}
                                     {correction && (
                                         <div className="mb-2">
                                             <p><strong>Errato:</strong> {correction}</p>
@@ -228,6 +268,8 @@ const Quiz = () => {
                             );
                         })}
                     </ul>
+
+                    {/* Pulsante per inviare i risultati */}
                     <div className="d-grid">
                         <button 
                             className="btn custom-btn" 
@@ -240,28 +282,36 @@ const Quiz = () => {
         );
     }
     
-    const currentQuestion = state.questions[state.currentQuestionIndex];
-
+    // Ritorno per la schermata delle domande durante il quiz
+    const currentQuestion = state.questions[state.currentQuestionIndex]; // Ottiene la domanda corrente in base all'indice attuale
     return (
         <div className="container mt-4 mb-5">
             <div className="border rounded p-4 shadow-sm">
                 <h3 className="mb-4 text-center"><strong>Test: {selectedTest.name}</strong></h3>
+
+                {/* Sezione della domanda corrente */}
                 <div className="form-group">
+                    {/* Indicazione del progresso nel quiz: domanda attuale su totale */}
                     <h5 className="mb-2"><strong>Domanda {state.currentQuestionIndex + 1} / {state.questions.length}</strong></h5>
+                    {/* Testo della domanda corrente */}
                     <p>
                         {currentQuestion?.text}
                     </p>
                 </div>
+
+                {/* Sezione delle risposte */}
                 <div className="form-group">
                     <h5 className="mb-2"><strong>Seleziona una risposta:</strong></h5>
+
+                    {/* Elenco delle risposte come bottoni */}
                     <div className="d-grid gap-3">
-                        {currentQuestion?.answers.map((answer, index) => (
+                        {currentQuestion?.answers.map((answer, index) => ( // Mappa le risposte della domanda corrente
                             <button 
-                                key={index} 
+                                key={index} // Chiave unica per ogni bottone
                                 className="btn custom-btn"
-                                onClick={() => handleAnswer(answer.text)}
+                                onClick={() => handleAnswer(answer.text)} // Funzione chiamata al click con il testo della risposta come parametro
                             >
-                                {answer.text}
+                                {answer.text} {/* Testo della risposta */}
                             </button>
                         ))}
                     </div>

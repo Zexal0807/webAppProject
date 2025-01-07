@@ -1,32 +1,65 @@
+// Stato iniziale del quiz
 export const initialState = {
-    questions: [],
-    currentQuestionIndex: 0,
-    answers: [],
-    isQuizStarted: false,
-    isQuizFinished: false,
-    score: 0,
+    questions: [], // Lista delle domande del quiz
+    currentQuestionIndex: 0, // Indice della domanda attuale
+    answers: [], // Lista delle risposte date dall'utente
+    isQuizStarted: false, // Stato che indica se il quiz è iniziato
+    isQuizFinished: false, // Stato che indica se il quiz è terminato
+    score: 0, // Punteggio totale dell'utente
 };
 
+// Funzione reducer per gestire lo stato del quiz
 export const quizReducer = (state, action) => {
     switch (action.type) {
         case "SET_QUESTIONS":
+            // Imposta le domande nel quiz
             return { ...state, questions: action.payload };
+
         case "START_QUIZ":
-            return { ...state, isQuizStarted: true, currentQuestionIndex: 0, answers: [], score: 0 };
+            // Avvia il quiz, resettando le risposte e il punteggio
+            return { 
+                ...state, 
+                isQuizStarted: true, 
+                currentQuestionIndex: 0, // Resetta l'indice alla prima domanda
+                answers: [], // Cancella eventuali risposte precedenti
+                score: 0 // Resetta il punteggio
+            };
+
         case "ANSWER_QUESTION":
+            // Aggiungi la risposta alla lista delle risposte e aggiorna il punteggio
             const { questionIndex, answer } = action.payload;
-            const selectedAnswer = state.questions[questionIndex].answers.find(ans => ans.text === answer);
+
+            // Trova la risposta selezionata nella domanda corrente
+            const selectedAnswer = state.questions[questionIndex].answers.find(
+                ans => ans.text === answer
+            );
+
+            // Verifica se la risposta è corretta (score === 1 indica correttezza)
             const isCorrect = selectedAnswer?.score === 1;
-            const correction = isCorrect ? null : selectedAnswer?.correction; // Se non corretta, prendi la correzione
+
+            // Se la risposta è sbagliata, ottieni la correzione (testo esplicativo)
+            const correction = isCorrect ? null : selectedAnswer?.correction;
+
             return {
                 ...state,
-                answers: [...state.answers, { questionIndex, answer, correction }],
-                score: isCorrect ? state.score + 1 : state.score,
-                currentQuestionIndex: state.currentQuestionIndex + 1,
+                answers: [
+                    ...state.answers, // Mantieni le risposte precedenti
+                    { questionIndex, answer, correction } // Aggiungi la nuova risposta
+                ],
+                score: isCorrect ? state.score + 1 : state.score, // Incrementa il punteggio se corretto
+                currentQuestionIndex: state.currentQuestionIndex + 1, // Passa alla domanda successiva
             };
+
         case "FINISH_QUIZ":
-            return { ...state, isQuizFinished: true, isQuizStarted: false };
+            // Termina il quiz, aggiornando lo stato
+            return { 
+                ...state, 
+                isQuizFinished: true, // Segna il quiz come completato
+                isQuizStarted: false // Imposta lo stato di non avviato
+            };
+
         default:
+            // Ritorna lo stato attuale per azioni sconosciute
             return state;
     }
 };

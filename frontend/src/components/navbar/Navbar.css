@@ -7,6 +7,10 @@
   color: var(--white); /* Colore del testo */
 }
 
+.navbar-item.selected {
+  background-color: var(--bg-color); /* Cambia il colore di sfondo quando è stata selezionata una voce del navbar */
+}
+
 /* Stile dei link all'interno delle voci del menu */
 .navbar .navbar-item a {
   color: var(--white); /* Colore del testo dei link */
@@ -158,6 +162,7 @@
     text-align: center; /* Allinea il testo al centro */
     left: -30%; /* Aggiunge uno spostamento a sinistra */
     top: 100%; /* Posiziona il sottomenù subito sotto la voce del menu */
+    z-index: 1000; /* Assicura che il sottomenù sia sopra gli altri elementi */
   }
 
   /* Stile degli elementi della lista */

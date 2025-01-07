@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import "./Navbar.css";
 
 export default function Navbar() {
@@ -6,6 +7,9 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Stato per controllare l'apertura del menu
   const [openSubMenus, setOpenSubMenus] = useState({}); // Stato per gestire l'apertura dei singoli sottomenù
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 1024); // Stato per rilevare se è in modalità desktop
+  const [selectedPage, setSelectedPage] = useState(null);
+
+  const navigate = useNavigate(); // Hook di React Router per la navigazione
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +24,11 @@ export default function Navbar() {
       if (response.ok) {
         const data = await response.json();
         setPages(data);
+
+        // Controlla l'URL attuale e imposta la pagina selezionata
+        const currentPath = window.location.pathname; // Ottieni il percorso attuale
+        const selectedIndex = data.findIndex((page) => `/${page.url}` === currentPath);
+        setSelectedPage(selectedIndex); // Imposta la pagina selezionata
       }
     };
 
@@ -36,7 +45,9 @@ export default function Navbar() {
 
   const handleLinkClick = (index, event) => {
     if (!pages[index].sub || pages[index].sub.length === 0) {
-      window.location.href = `/${pages[index].url}`; // Naviga alla pagina
+      event.preventDefault(); // Previene la navigazione diretta
+      setSelectedPage(index); // Imposta la pagina selezionata
+      navigate(`/${pages[index].url}`); // Naviga senza ricaricare la pagina
     }
   };
 
@@ -49,7 +60,7 @@ export default function Navbar() {
       <ul className="sub-list">
         {sub.map((page, i) => (
           <li key={i}>
-            <a href={`/${page.url}`}>{page.name}</a>
+            <Link to={`/${page.url}`}>{page.name}</Link>
           </li>
         ))}
       </ul>
@@ -57,10 +68,10 @@ export default function Navbar() {
   };
 
   const renderItem = (page, index, isSubItem = false) => {
+    const isSelected = selectedPage === index; // Verifica se è selezionato
     return (
       <div
-        className={`navbar-item ${page.sub && page.sub.length > 0 ? "has-sub" : ""} ${openSubMenus[index] ? "open" : ""}`}
-        key={index}
+      className={`navbar-item ${page.sub && page.sub.length > 0 ? "has-sub" : ""} ${openSubMenus[index] ? "open" : ""} ${isSelected ? "selected" : ""}`}        key={index}
         onMouseEnter={() => {
           if (isDesktop && page.sub && page.sub.length > 0) {
             setOpenSubMenus((prevState) => ({
@@ -79,14 +90,14 @@ export default function Navbar() {
         }}
       >
         <div>
-          <a
-            href={`/${page.url}`}
+          <Link
+            to={`/${page.url}`}
             onClick={(event) => {
               if (!isSubItem) handleLinkClick(index, event);
             }}
           >
             {page.name}
-          </a>
+          </Link>
           {page.sub && page.sub.length > 0 && (
             <span
               className="menu-toggle"
