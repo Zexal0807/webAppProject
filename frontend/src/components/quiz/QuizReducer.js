@@ -58,6 +58,18 @@ export const quizReducer = (state, action) => {
                 isQuizStarted: false // Imposta lo stato di non avviato
             };
 
+        case "RESET":
+            // Resetta lo stato del quiz
+            return { 
+                ...state, 
+                questions: [], 
+                isQuizStarted: false,
+                isQuizFinished: false,
+                currentQuestionIndex: 0,
+                answers: [],
+                score: 0 
+            };
+
         default:
             // Ritorna lo stato attuale per azioni sconosciute
             return state;
