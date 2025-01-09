@@ -122,6 +122,8 @@ const Quiz = () => {
             },
         };
 
+        console.log("Dati inviati al backend", testExecutionData)
+
         try {
             const url = `${process.env.REACT_APP_BACKEND_HOST}/api/test-executions`;
             const response = await fetch(url, {
@@ -286,7 +288,7 @@ const Quiz = () => {
         setError("");
     };
 
-    // Ritorno per la schermata di inserimento dei dati iniziali
+    // return per la schermata di inserimento dei dati iniziali
     if (!state.isQuizStarted && !state.isQuizFinished) {
         return (
             <div className="container mt-4 mb-5">
@@ -304,6 +306,7 @@ const Quiz = () => {
                                     onChange={(e) => setAge(e.target.value)} // Aggiorna lo stato quando cambia
                                     className="form-control"
                                     placeholder="Inserisci la tua età"
+                                    aria-label="Seleziona il sesso"
                                 />
                             </div>
                         </div>
@@ -316,6 +319,7 @@ const Quiz = () => {
                                     value={sex}
                                     onChange={(e) => setSex(e.target.value)} // Aggiorna lo stato quando cambia
                                     className="form-select responsive-select"
+                                    aria-label="Seleziona il sesso"
                                 >
                                     <option value="">Seleziona il sesso</option>
                                     <option value="1">Maschio</option>
@@ -337,14 +341,14 @@ const Quiz = () => {
         );
     }
 
-    // Ritorno per la schermata di fine quiz
+    // return per la schermata di fine quiz
     if (state.isQuizFinished) {
         return (
             <div className="container mt-4 mb-5">
                 <div className="border rounded p-4 shadow-sm">
 
                     {/* Messaggio di fine quiz */}
-                    <h3 className="text-center mb-4">
+                    <h3 className="text-center mb-4" aria-live="polite">
                         <strong>Quiz completato!</strong>
                     </h3>
 
@@ -374,9 +378,9 @@ const Quiz = () => {
                             // Imposta la classe di sfondo in base alla correttezza della risposta
                             let answerClass = "list-group-item border-top mb-3 rounded";
                             if (isCorrect) {
-                                answerClass += " bg-success text-white"; // Verde per risposta corretta
+                                answerClass += " bg-success"; // Verde per risposta corretta
                             } else if (isIncorrect) {
-                                answerClass += " bg-danger text-white"; // Rosso per risposta sbagliata
+                                answerClass += " bg-danger"; // Rosso per risposta sbagliata
                             }
 
                             // Elemento della lista con dettagli della domanda e risposta
@@ -384,7 +388,7 @@ const Quiz = () => {
                                 <li key={index} className={answerClass}>
                                     {/* Testo della domanda */}
                                     <div className="mb-2">
-                                        <p><strong>Domanda {index + 1}:</strong> {question.text}</p>
+                                        <p ><strong>Domanda {index + 1}:</strong> {question.text}</p>
                                     </div>
 
                                     {/* Risposta fornita */}
@@ -407,18 +411,24 @@ const Quiz = () => {
                     <div className="d-flex justify-content-center gap-2 mt-3">
                         <button 
                             className="btn custom-btn w-100" 
-                            onClick={handleSendResults}>
+                            onClick={handleSendResults}
+                            aria-label="Invia i risultati del quiz"
+                        >
                             Invia risultati
                         </button>
                         <button 
                             className="btn custom-btn w-100" 
-                            onClick={handleSaveResults}>
+                            onClick={handleSaveResults}
+                            aria-label="Salva i risultati del quiz"
+                        >
                             Salva risultati
                         </button>
                         <button 
                             className="btn custom-btn w-100" 
-                            onClick={handleRestart}>
-                            Rispondi a un nuovo quiz
+                            onClick={handleRestart}
+                            aria-label="Inizia un nuovo quiz"
+                        >
+                            Inizia a un nuovo quiz
                         </button>
                     </div>
                 </div>
@@ -426,7 +436,7 @@ const Quiz = () => {
         );
     }
     
-    // Ritorno per la schermata delle domande durante il quiz
+    // return per la schermata delle domande durante il quiz
     const currentQuestion = state.questions[state.currentQuestionIndex]; // Ottiene la domanda corrente in base all'indice attuale
     return (
         <div className="container mt-4 mb-5">
@@ -438,7 +448,7 @@ const Quiz = () => {
                     {/* Indicazione del progresso nel quiz: domanda attuale su totale */}
                     <h5 className="mb-2"><strong>Domanda {state.currentQuestionIndex + 1} / {state.questions.length}</strong></h5>
                     {/* Testo della domanda corrente */}
-                    <p>
+                    <p className="textquestion">
                         {currentQuestion?.text}
                     </p>
                 </div>
@@ -454,6 +464,7 @@ const Quiz = () => {
                                 key={index} // Chiave unica per ogni bottone
                                 className="btn custom-btn"
                                 onClick={() => handleAnswer(answer.text)} // Funzione chiamata al click con il testo della risposta come parametro
+                                aria-label={`Risposta: ${answer.text}`} // Aggiungi aria-label per le risposte
                             >
                                 {answer.text} {/* Testo della risposta */}
                             </button>

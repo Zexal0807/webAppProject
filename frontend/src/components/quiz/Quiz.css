@@ -12,13 +12,19 @@
 }
 
 .list-group-item.bg-success {
-    background-color: #4CAF50 !important; /* Verde intenso */
+    background-color: #4CAF50 !important; /* Verde  */
+    color: #000000; /* Testo scuro per miglior contrasto */
 }
 
 .list-group-item.bg-danger {
-    background-color: #E57373 !important; /* Rosso intenso */
+    background-color: #E57373 !important; /* Rosso  */
+    color: #000000; /* Testo scuro per miglior contrasto */
 }
 
 .list-group li {
     padding-bottom: 0; /* Riduce lo spazio tra il contenuto e il bordo inferiore */
+}
+
+.textquestion {
+    font-size: 20px;
 }

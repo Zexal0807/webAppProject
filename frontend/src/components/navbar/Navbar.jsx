@@ -43,35 +43,45 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", handleResize); // Rimuove l'evento quando il componente viene smontato
   }, []);
 
-  const handleLinkClick = (index, event) => {
-    if (!pages[index].sub || pages[index].sub.length === 0) {
-      event.preventDefault(); // Previene la navigazione diretta
-      setSelectedPage(index); // Imposta la pagina selezionata
-      navigate(`/${pages[index].url}`); // Naviga senza ricaricare la pagina
-    }
+  const handleLinkClick = (index, event, parentIndex = null) => {
+    event.preventDefault(); // Previene la navigazione diretta
+  
+    const targetIndex = parentIndex !== null ? parentIndex : index; // Usa l'indice della voce principale se è una sottovoce
+    setSelectedPage(targetIndex); // Imposta la pagina principale come selezionata
+  
+    const targetUrl = parentIndex !== null ? pages[parentIndex].sub[index].url : pages[index].url; // Determina l'URL corretto
+    navigate(`/${targetUrl}`); // Naviga all'URL corretto
   };
+  
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen); // Toggle menu
   };
 
-  const renderSubItemSection = (sub) => {
+  const renderSubItemSection = (sub, parentIndex) => {
     return (
       <ul className="sub-list">
         {sub.map((page, i) => (
           <li key={i}>
-            <Link to={`/${page.url}`}>{page.name}</Link>
+            <Link
+              to={`/${page.url}`}
+              onClick={(event) => handleLinkClick(i, event, parentIndex)} // Passa l'indice della sottovoce e della voce principale
+            >
+              {page.name}
+            </Link>
           </li>
         ))}
       </ul>
     );
   };
+  
 
   const renderItem = (page, index, isSubItem = false) => {
     const isSelected = selectedPage === index; // Verifica se è selezionato
     return (
       <div
-      className={`navbar-item ${page.sub && page.sub.length > 0 ? "has-sub" : ""} ${openSubMenus[index] ? "open" : ""} ${isSelected ? "selected" : ""}`}        key={index}
+      className={`navbar-item ${page.sub && page.sub.length > 0 ? "has-sub" : ""} ${openSubMenus[index] ? "open" : ""} ${isSelected ? "selected" : ""}`}        
+      key={index}
         onMouseEnter={() => {
           if (isDesktop && page.sub && page.sub.length > 0) {
             setOpenSubMenus((prevState) => ({
@@ -114,7 +124,7 @@ export default function Navbar() {
         </div>
         {page.sub && page.sub.length > 0 && openSubMenus[index] && (
           <div className="sub-menu">
-            {renderSubItemSection(page.sub)}
+            {renderSubItemSection(page.sub, index)}
           </div>
         )}
       </div>
@@ -124,7 +134,7 @@ export default function Navbar() {
   return (
     <div className="navbar pt-3 pb-0 justify-content-center">
       <div className="col-12 col-lg-8">
-        <button className="mobile-menu-toggle" onClick={handleMenuToggle}>&#9776; {/* Icona hamburger */}</button>
+        <button aria-label="Apri menu di navigazione" className="mobile-menu-toggle" onClick={handleMenuToggle}>&#9776; {/* Icona hamburger */}</button>
         <div className={`navbar-menu ${isMenuOpen ? "open" : ""}`}>
           {pages.map((page, i) => renderItem(page, i))}
         </div>
