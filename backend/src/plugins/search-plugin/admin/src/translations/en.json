@@ -15,5 +15,7 @@
   "label.questions": "Questions",
   "label.revision_date": "Last revision",
   "label.note": "Note",
-  "button.save": "Save"
+  "button.save": "Save",
+  "notification.success": "Nota added correctly",
+  "notification.failed": "Adding note failed"
 }

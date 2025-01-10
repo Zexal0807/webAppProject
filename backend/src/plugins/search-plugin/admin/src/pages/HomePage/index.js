@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Textarea, TextInput, DatePicker, Button, Box, Typography } from '@strapi/design-system';
-import { Search } from '@strapi/icons';
+import { Textarea, TextInput, DateTimePicker, Button, Box, Typography } from '@strapi/design-system';
+import { Search, Archive } from '@strapi/icons';
 import { useIntl } from "react-intl";
+import { useNotification } from '@strapi/helper-plugin';
 import axios from 'axios';
 
 const Homepage = () => {
   const { formatMessage } = useIntl();
+  const toggleNotification = useNotification();
 
   const [code, setCode] = useState('');
   const [results, setResults] = useState([]);
@@ -14,7 +16,7 @@ const Homepage = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(`/search-plugin/search?code=${code}`);
-      setResults([...response.data.data, ...response.data.data]);
+      setResults(response.data.data);
       setSelectedEntry(null);
     } catch (error) {
       console.error('Error fetching search results:', error);
@@ -22,9 +24,17 @@ const Homepage = () => {
   };
 
   const handleSave = async (e) => {
-    debugger;
-    
-
+    try {
+      const response = await axios.put(`/api/test-execution/${selectedEntry.id}`, {
+        revision_date: new Date(),
+        note: selectedEntry.note
+      });
+      toggleNotification({ type: 'success', message: formatMessage({id:'search-plugin.notification.success'}) });
+      handleSearch();
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+      toggleNotification({ type: 'warning', message: formatMessage({id:'search-plugin.notification.failed'}) });
+    }
   }
 
   return (
@@ -136,7 +146,7 @@ const Homepage = () => {
             fontSize: "0.75rem", 
             fontWeight: "600", 
             paddingTop:"0.5rem", 
-            paddingBottom: "0.5rem"
+            paddingBottom: "0rem"
             }}>
             {formatMessage({id:'search-plugin.label.questions'})}:
           </div>
@@ -169,14 +179,18 @@ const Homepage = () => {
 
           <div style={{width:"100%", display: "flex", paddingTop:"1rem"}}>
             <div style={{width:"33%", paddingRight:"1rem"}}>
-              <DatePicker
+              <DateTimePicker
                 label={formatMessage({id:'search-plugin.label.revision_date'})}
-                value={selectedEntry.revision_date}
+                disabled={true}
+                initialDate={selectedEntry.revision_date}
               />
             </div>
             <div style={{width:"67%", paddingLeft:"1rem"}}>
               <Textarea
                 label={formatMessage({id:'search-plugin.label.note'})}
+                onChange={(e) => {
+                  setSelectedEntry({ ...selectedEntry, note: e.target.value});
+                }}
                 value={selectedEntry.note}
               />
             </div>
@@ -184,7 +198,7 @@ const Homepage = () => {
 
           <div style={{width:"100%", display: "flex", paddingTop:"1rem"}}>
             <Button onClick={handleSave} size="L">
-              <Search /> {formatMessage({id:'search-plugin.button.save'})}
+              <Archive /> {formatMessage({id:'search-plugin.button.save'})}
             </Button>
           </div>
 
