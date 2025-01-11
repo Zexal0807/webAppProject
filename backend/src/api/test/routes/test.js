@@ -1,9 +1,12 @@
-'use strict';
-
-/**
- * test router
- */
-
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::test.test');
+module.exports = {
+    routes: [
+        {
+            method: 'GET',
+            path: '/test',
+            handler: 'test.getRandomEntry',
+            config: {
+                auth: false, // Imposta su true se vuoi autenticare l'accesso
+            },
+        },
+    ],
+};

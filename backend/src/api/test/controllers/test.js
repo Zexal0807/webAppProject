@@ -1,9 +1,28 @@
-'use strict';
+module.exports = {
+    async getRandomEntry(ctx) {
+        try {
+            // Recupera solo le entries pubblicate
+            const entries = await strapi.entityService.findMany('api::test.test', {
+                filters: { publishedAt: { $notNull: true } }, // Solo le pubblicate
+                populate: {
+                    questions: {
+                        populate: {
+                            answers: true
+                        }
+                    }
+                }
+            });
 
-/**
- * test controller
- */
+            if (!entries || entries.length === 0) {
+                return ctx.notFound('No published entries found.');
+            }
 
-const { createCoreController } = require('@strapi/strapi').factories;
+            // Seleziona una entry casuale
+            const randomEntry = entries[Math.floor(Math.random() * entries.length)];
 
-module.exports = createCoreController('api::test.test');
+            ctx.body = randomEntry;
+        } catch (err) {
+            ctx.throw(500, err.message);
+        }
+    },
+};
