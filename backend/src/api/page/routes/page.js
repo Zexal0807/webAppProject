@@ -8,9 +8,6 @@ module.exports = {
       handler: 'page.find',
       config: {
         auth: false
-        // { 
-        //   scope: ['find', 'findMany','findOne']
-        // }
       }
     },
     {
@@ -19,9 +16,6 @@ module.exports = {
       handler: 'page.findPageBySlug',
       config: {
         auth: false
-        // { 
-        //   scope: ['find', 'findMany', 'findOne'] // Specifica l'azione richiesta
-        // }
       },
     },
   ],

@@ -1,9 +1,10 @@
-'use strict';
-
-/**
- * sex controller
- */
-
-const { createCoreController } = require('@strapi/strapi').factories;
-
-module.exports = createCoreController('api::sex.sex');
+module.exports = {
+    async getAllSexEntries(ctx) {
+        try {
+            const entries = await strapi.entityService.findMany('api::sex.sex');
+            ctx.body = entries;
+        } catch (err) {
+            ctx.throw(500, err);
+        }
+    },
+};
