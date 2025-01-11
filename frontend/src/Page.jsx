@@ -16,11 +16,10 @@ export default function Page() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const url = `${process.env.REACT_APP_BACKEND_HOST}/api/find-page`;
+			const url = `${process.env.REACT_APP_BACKEND_HOST}/api/page/${pageId}`;
 
 			const response = await fetch(url, {
-				method: "POST",
-				body: JSON.stringify({ pageId }),
+				method: "GET",
 				headers: {
 					Authorization: `Bearer ${process.env.REACT_APP_FETCH_TOKEN}`,
 					"Content-Type": "application/json",

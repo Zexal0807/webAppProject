@@ -29,12 +29,11 @@ const Quiz = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const url = `${process.env.REACT_APP_BACKEND_HOST}/api/find-page`;
+                const url = `${process.env.REACT_APP_BACKEND_HOST}/api/page/quiz`;
 
                 // Effettua una richiesta POST per ottenere i dati del quiz
                 const response = await fetch(url, {
-                    method: "POST",
-                    body: JSON.stringify({ pageId: "quiz" }),
+                    method: "GET",
                     headers: {
                         Authorization: `Bearer ${process.env.REACT_APP_FETCH_TOKEN}`,
                         "Content-Type": "application/json",
@@ -331,11 +330,13 @@ const Quiz = () => {
                     </div>
                     {/* Messaggio di errore se i dati inseriti non sono validi */}
                     {error && <p className="text-danger">{error}</p>}
-                    <button 
-                    className="btn custom-btn btn-block"
-                    onClick={handleStartQuiz} // Funzione chiamata al click
-                    >
-                        Invio</button>
+                    <div className="d-flex justify-item-center align-items-center">
+                        <button 
+                            className="btn custom-btn btn-block col-4 m-auto"
+                            onClick={handleStartQuiz} // Funzione chiamata al click
+                        >
+                        Inizia</button>
+                    </div>
                 </div>
             </div>
         );
@@ -409,22 +410,22 @@ const Quiz = () => {
 
                     {/* Pulsante per inviare i risultati */}
                     <div className="d-flex justify-content-center gap-2 mt-3">
-                        <button 
+                        {/* <button 
                             className="btn custom-btn w-100" 
                             onClick={handleSendResults}
                             aria-label="Invia i risultati del quiz"
                         >
                             Invia risultati
-                        </button>
+                        </button> */}
                         <button 
                             className="btn custom-btn w-100" 
                             onClick={handleSaveResults}
                             aria-label="Salva i risultati del quiz"
                         >
-                            Salva risultati
+                            Scarica i risultati
                         </button>
                         <button 
-                            className="btn custom-btn w-100" 
+                            className="btn btn-secondary w-100" 
                             onClick={handleRestart}
                             aria-label="Inizia un nuovo quiz"
                         >
@@ -462,7 +463,7 @@ const Quiz = () => {
                         {currentQuestion?.answers.map((answer, index) => ( // Mappa le risposte della domanda corrente
                             <button 
                                 key={index} // Chiave unica per ogni bottone
-                                className="btn custom-btn"
+                                className="btn custom-btn py-3"
                                 onClick={() => handleAnswer(answer.text)} // Funzione chiamata al click con il testo della risposta come parametro
                                 aria-label={`Risposta: ${answer.text}`} // Aggiungi aria-label per le risposte
                             >

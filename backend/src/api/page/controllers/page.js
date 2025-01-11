@@ -1,8 +1,6 @@
-const answer = require("../../answer/controllers/answer");
-
 module.exports = {
     async findPageBySlug(ctx) {
-        const { pageId } = ctx.request.body;
+        const { pageId } = ctx.request.params;
         try {
             const page = await strapi.entityService.findMany('api::page.page', {
                 filters: { slug: pageId },
