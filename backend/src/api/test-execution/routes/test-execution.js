@@ -1,11 +1,19 @@
-module.exports = {
+module.exports = { 
     routes: [
         {
+            method: 'POST',
+            path: '/test-executions',
+            handler: 'test-execution.create',
+            config: {
+                auth: false, 
+            },
+        },
+        {
             method: 'PUT',
-            path: '/test-execution/:id',
+            path: '/test-executions/:id',
             handler: 'test-execution.updateInstance',
             config: {
-                auth: false
+                auth: false, 
             },
         },
     ],

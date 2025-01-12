@@ -15,6 +15,7 @@ const Quiz = () => {
     const [error, setError] = useState(""); // Stato per il messaggio di errore
     const [tests, setTests] = useState([]); // Stato per memorizzare i test
     const [selectedTest, setSelectedTest] = useState(null); // Stato per il test selezionato
+    const [resultsSent, setResultsSent] = useState(false); // Stato per tracciare se i risultati sono stati inviati
 
     // Funzione per generare il codice del test in formato ISO+3lettere
     const generateTestCode = () => {
@@ -61,6 +62,22 @@ const Quiz = () => {
         fetchData();
     }, []);
 
+    // useEffect che invia automaticamente i risultati al backend quando il quiz è finito
+    useEffect(() => {
+        if (state.isQuizFinished && !resultsSent) {
+            handleSendResults();  // Chiamata alla funzione solo quando il quiz è finito
+            setResultsSent(true);  // Imposta a true quando i risultati sono inviati
+        }
+    }, [state.isQuizFinished, resultsSent]);  // Dipende dallo stato `isQuizFinished` e `resultsSent`
+
+    // Algoritmo per mescolare le risposte
+    const shuffleArray = (array) => {
+        return array
+            .map(value => ({ value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({ value }) => value);
+    };    
+
     // Gestione dell'avvio del quiz
     const handleStartQuiz = () => {
         if (!age || !sex) { // Controlla che i campi obbligatori siano compilati
@@ -78,8 +95,15 @@ const Quiz = () => {
         setSelectedTest(randomTest);
         console.log("Test selezionato:", randomTest);  // Debug
 
+        // Mescola le risposte di ogni domanda
+        const questionsWithShuffledAnswers = randomTest.questions.map(question => ({
+            ...question,
+            answers: shuffleArray(question.answers), // Mescola le risposte
+        }));
+
         // Imposta le domande del test selezionato nello stato globale
-        dispatch({ type: "SET_QUESTIONS", payload: randomTest.questions || [] });
+        dispatch({ type: "SET_QUESTIONS", payload: questionsWithShuffledAnswers || [] }); // Passa le domande com le risposte mescolate al reducer
+        //dispatch({ type: "SET_QUESTIONS", payload: randomTest.questions || [] });
         dispatch({ type: "START_QUIZ" });
     };
 
@@ -285,6 +309,7 @@ const Quiz = () => {
         setIP("192.168.1.1");
         setCode("");
         setError("");
+        setResultsSent(false);
     };
 
     // return per la schermata di inserimento dei dati iniziali
@@ -410,13 +435,6 @@ const Quiz = () => {
 
                     {/* Pulsante per inviare i risultati */}
                     <div className="d-flex justify-content-center gap-2 mt-3">
-                        {/* <button 
-                            className="btn custom-btn w-100" 
-                            onClick={handleSendResults}
-                            aria-label="Invia i risultati del quiz"
-                        >
-                            Invia risultati
-                        </button> */}
                         <button 
                             className="btn custom-btn w-100" 
                             onClick={handleSaveResults}
