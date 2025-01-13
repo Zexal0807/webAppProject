@@ -16,6 +16,8 @@ const Quiz = () => {
     const [tests, setTests] = useState([]); // Stato per memorizzare i test
     const [selectedTest, setSelectedTest] = useState(null); // Stato per il test selezionato
     const [resultsSent, setResultsSent] = useState(false); // Stato per tracciare se i risultati sono stati inviati
+    const [sexOptions, setSexOptions] = useState([]); // Stato per le opzioni di sesso
+
 
     // Funzione per generare il codice del test in formato ISO+3lettere
     const generateTestCode = () => {
@@ -70,6 +72,37 @@ const Quiz = () => {
         }
     }, [state.isQuizFinished, resultsSent]);  // Dipende dallo stato `isQuizFinished` e `resultsSent`
 
+    // useEffect per caricare i tipi di sesso
+    useEffect(() => {
+        const fetchSexData = async () => {
+            try {
+                const url = `${process.env.REACT_APP_BACKEND_HOST}/api/sex`;
+
+                // Effettua una richiesta GET per ottenere i tipi di sesso
+                const response = await fetch(url, {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${process.env.REACT_APP_FETCH_TOKEN}`,
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                // Se la risposta è positiva, aggiorna lo stato con i test ricevuti
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Dati sesso ricevuti:", data);
+                    setSexOptions(data); 
+                } else {
+                    console.error("Errore nella risposta dell'API:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Errore nella fetch:", error);
+            }
+        };
+
+        fetchSexData();
+    }, []);
+
     // Algoritmo per mescolare le risposte
     const shuffleArray = (array) => {
         return array
@@ -98,7 +131,7 @@ const Quiz = () => {
         // Mescola le risposte di ogni domanda
         const questionsWithShuffledAnswers = randomTest.questions.map(question => ({
             ...question,
-            answers: shuffleArray(question.answers), // Mescola le risposte
+            answers: shuffleArray(question.answers), 
         }));
 
         // Imposta le domande del test selezionato nello stato globale
@@ -178,6 +211,16 @@ const Quiz = () => {
         }
     };
 
+    // Funzione per trovare il nome associato all'id del sesso
+    const getSexName = (sexid) => {
+        // Usa il metodo 'find' per cercare l'oggetto nell'array 'sexOptions' 
+        // dove l'ID dell'oggetto corrisponde all'ID passato alla funzione
+        const selectedOption = sexOptions.find(option => option.id === parseInt(sexid));
+        // Se è stato trovato un oggetto (selectedOption non è undefined), restituisce il nome
+        // Altrimenti restituisce "Sconosciuto" se l'oggetto non è stato trovato
+        return selectedOption ? selectedOption.name : "Sconosciuto";
+    };
+
     // Funzione per salvare i risultati del quiz in un file PDF
     const handleSaveResults = () => {
         const doc = new jsPDF(); // Crea un nuovo documento PDF
@@ -210,17 +253,7 @@ const Quiz = () => {
 
         // Aggiungi i dati dell'utente
         centerText(`Età: ${age}`);
-        
-        // Determina il nome del sesso in base al valore selezionato
-        let namesex;
-        if (sex === "1") {
-            namesex = "Maschio";
-        } else if (sex === "2") {
-            namesex = "Femmina";
-        } else if (sex === "3") {
-            namesex = "Altro";
-        } 
-
+        const namesex = getSexName(sex);
         centerText(`Sesso: ${namesex}`);
         centerText(`Codice del Test: ${code}`);
         centerText(`Punteggio: ${state.score} / ${state.questions.length}`);
@@ -315,7 +348,7 @@ const Quiz = () => {
     // return per la schermata di inserimento dei dati iniziali
     if (!state.isQuizStarted && !state.isQuizFinished) {
         return (
-            <div className="container mt-4 mb-5">
+            <div className="container mt-4 mb-5 pb-4">
                 <div className="border rounded p-4 shadow-sm">
                 <h4 className="mb-4">Inserisci i dati per iniziare</h4>
                     <div className="row mb-3">
@@ -346,9 +379,9 @@ const Quiz = () => {
                                     aria-label="Seleziona il sesso"
                                 >
                                     <option value="">Seleziona il sesso</option>
-                                    <option value="1">Maschio</option>
-                                    <option value="2">Femmina</option>
-                                    <option value="3">Altro</option>
+                                    {sexOptions.map(option => (
+                                        <option key={option.id} value={option.id}>{option.name}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
