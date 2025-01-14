@@ -14,10 +14,8 @@ const Quiz = () => {
     const [code, setCode] = useState(""); // Codice test iniziale vuoto
     const [error, setError] = useState(""); // Stato per il messaggio di errore
     const [tests, setTests] = useState([]); // Stato per memorizzare i test
-    const [selectedTest, setSelectedTest] = useState(null); // Stato per il test selezionato
     const [resultsSent, setResultsSent] = useState(false); // Stato per tracciare se i risultati sono stati inviati
     const [sexOptions, setSexOptions] = useState([]); // Stato per le opzioni di sesso
-
 
     // Funzione per generare il codice del test in formato ISO+3lettere
     const generateTestCode = () => {
@@ -32,9 +30,9 @@ const Quiz = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const url = `${process.env.REACT_APP_BACKEND_HOST}/api/page/quiz`;
+                const url = `${process.env.REACT_APP_BACKEND_HOST}/api/test`;
 
-                // Effettua una richiesta POST per ottenere i dati del quiz
+                // Effettua una richiesta GET per ottenere i dati del quiz
                 const response = await fetch(url, {
                     method: "GET",
                     headers: {
@@ -46,13 +44,7 @@ const Quiz = () => {
                 // Se la risposta è positiva, aggiorna lo stato con i test ricevuti
                 if (response.ok) {
                     const data = await response.json();
-                    const quizComponent = data.layouts[0]?.content1?.find(
-                        (c) => c.__component === "components.quiz"
-                    );
-
-                    if (quizComponent?.tests) {
-                        setTests(quizComponent.tests); // Salva tutti i test nello stato
-                    }
+                    setTests(data); // Salva l'intera risposta API
                 } else {
                     console.error("Errore nella risposta dell'API:", response.statusText);
                 }
@@ -123,20 +115,15 @@ const Quiz = () => {
         const testCode = generateTestCode();
         setCode(testCode);  // Imposta il codice del test nello stato
 
-        // Seleziona un test casuale
-        const randomTest = tests[Math.floor(Math.random() * tests.length)];
-        setSelectedTest(randomTest);
-        console.log("Test selezionato:", randomTest);  // Debug
-
         // Mescola le risposte di ogni domanda
-        const questionsWithShuffledAnswers = randomTest.questions.map(question => ({
+        const questionsWithShuffledAnswers = tests.questions.map(question => ({
             ...question,
             answers: shuffleArray(question.answers), 
         }));
 
         // Imposta le domande del test selezionato nello stato globale
         dispatch({ type: "SET_QUESTIONS", payload: questionsWithShuffledAnswers || [] }); // Passa le domande com le risposte mescolate al reducer
-        //dispatch({ type: "SET_QUESTIONS", payload: randomTest.questions || [] });
+        //dispatch({ type: "SET_QUESTIONS", payload: tests.questions || [] });
         dispatch({ type: "START_QUIZ" });
     };
 
@@ -161,7 +148,7 @@ const Quiz = () => {
             data: {  
                 age,
                 sex: { id: sex },  
-                test: { id: selectedTest.id },  
+                test: { id: tests.id },  
                 score: state.score,
                 IP: IP,
                 code,  
@@ -190,11 +177,6 @@ const Quiz = () => {
                 },
                 body: JSON.stringify(testExecutionData),
             });
-
-            if (!selectedTest) {
-                console.error("Nessun test selezionato!");
-                return;
-            }
 
             if (!response.ok) {
                 const errorData = await response.json();
@@ -493,7 +475,7 @@ const Quiz = () => {
     return (
         <div className="container mt-4 mb-5">
             <div className="border rounded p-4 shadow-sm">
-                <h3 className="mb-4 text-center"><strong>Test: {selectedTest.name}</strong></h3>
+                <h3 className="mb-4 text-center"><strong>Test: {tests.name}</strong></h3>
 
                 {/* Sezione della domanda corrente */}
                 <div className="form-group">
@@ -514,7 +496,7 @@ const Quiz = () => {
                         {currentQuestion?.answers.map((answer, index) => ( // Mappa le risposte della domanda corrente
                             <button 
                                 key={index} // Chiave unica per ogni bottone
-                                className="btn custom-btn py-3"
+                                className="btn custom-btn py-3 textanswer"
                                 onClick={() => handleAnswer(answer.text)} // Funzione chiamata al click con il testo della risposta come parametro
                                 aria-label={`Risposta: ${answer.text}`} // Aggiungi aria-label per le risposte
                             >
