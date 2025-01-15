@@ -19,12 +19,13 @@ const Quiz = () => {
 
     // Funzione per generare il codice del test in formato ISO+3lettere
     const generateTestCode = () => {
-        const isoDate = new Date().toISOString().split('T')[0]; // Formato data ISO (YYYY-MM-DD)
+        const isoDate = new Date().toISOString().split('T')[0].replace(/-/g, ''); // Rimuove i trattini
         const randomLetters = Array.from({ length: 3 }, () =>
             String.fromCharCode(65 + Math.floor(Math.random() * 26)) // Genera lettere maiuscole casuali A-Z
         ).join('');
-        return `${isoDate}+${randomLetters}`; // Restituisce il codice completo
+        return `${isoDate}-${randomLetters}`; // Restituisce il codice completo senza trattini
     };
+    
 
     // Effetto per caricare i test dal backend all'avvio
     useEffect(() => {
