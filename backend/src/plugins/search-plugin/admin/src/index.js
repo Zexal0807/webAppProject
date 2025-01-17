@@ -6,32 +6,36 @@ import { auth } from '@strapi/helper-plugin';
 
 export default {
   register(app) {
-    app.addMenuLink({
-      to: `/plugins/${pluginId}`,
-      icon: Search,
-      intlLabel: {
-        id: `${pluginId}.plugin.name`,
-        defaultMessage: "Cerca test",
-      },
-      Component: async () => {
-        const component = await import('./pages/App');
-        return component;
-      },
-      permissions: [],
-    });
-
-    app.registerPlugin({
-      id: pluginId,
-      initializer: Initializer,
-      isReady: false,
-      name: pluginId,
-    });
     const user = auth.getUserInfo();
 
     if (!user)
       return;
 
-    if (user.roles.find(r => r.name == 'Medico') != undefined) {
+    if (user.roles.find(r => r.name == 'Doctor') != undefined ||
+      user.roles.find(r => r.name == 'Super Admin') != undefined) {
+      app.addMenuLink({
+        to: `/plugins/${pluginId}`,
+        icon: Search,
+        intlLabel: {
+          id: `${pluginId}.plugin.name`,
+          defaultMessage: "Cerca test",
+        },
+        Component: async () => {
+          const component = await import('./pages/App');
+          return component;
+        },
+        permissions: [],
+      });
+
+      app.registerPlugin({
+        id: pluginId,
+        initializer: Initializer,
+        isReady: false,
+        name: pluginId,
+      });
+    }
+
+    if (user.roles.find(r => r.name == 'Doctor') != undefined) {
       // Hide plugins links
       const exludedLinks = [
         '/plugins/content-type-builder',
