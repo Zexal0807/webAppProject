@@ -84,9 +84,7 @@ export interface ComponentsQuiz extends Schema.Component {
     displayName: 'Quiz';
     description: '';
   };
-  attributes: {
-    tests: Attribute.Relation<'components.quiz', 'oneToMany', 'api::test.test'>;
-  };
+  attributes: {};
 }
 
 export interface ComponentsMap extends Schema.Component {

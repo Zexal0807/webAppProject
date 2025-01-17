@@ -5,11 +5,5 @@
     "description": ""
   },
   "options": {},
-  "attributes": {
-    "tests": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::test.test"
-    }
-  }
+  "attributes": {}
 }
