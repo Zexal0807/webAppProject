@@ -13,7 +13,7 @@ export default function Infection({ infections }) {
             <div className="row justify-content-center">
                 {infections.map((infection, index) => (
                     <div className="col-md-4 col-sm-6 col-12 mb-4" key={index}>
-                        <Link to={`/le-infezioni/${formatLink(infection.value)}`} className="infection-link">
+                        <Link to={`/le-infezioni/${formatLink(infection.value)}`} className="infection-link" tabIndex="0">
                             <div className="infection-component">
                                 <h5>{infection.value}</h5>
                             </div>

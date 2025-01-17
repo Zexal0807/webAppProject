@@ -4,7 +4,7 @@ import "./Times.css";
 
 export default function Times({ value, tableTimes }) {
 	return (
-		<div className="times px-3 mb-4">
+		<div className="times px-3 mb-4" tabIndex="0">
 			<h5>{value}</h5>
 			<div className="d-flex justify-content-center align-items-center">
 				<table className="col-10 col-sm-4">

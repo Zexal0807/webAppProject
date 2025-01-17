@@ -19,14 +19,13 @@ const Quiz = () => {
 
     // Funzione per generare il codice del test in formato ISO+3lettere
     const generateTestCode = () => {
-        const isoDate = new Date().toISOString().split('T')[0].replace(/-/g, ''); // Rimuove i trattini
+        const isoDate = new Date().toISOString().split('T')[0].replace(/-/g, ''); // Formato data ISO (YYYYMMDD)
         const randomLetters = Array.from({ length: 3 }, () =>
             String.fromCharCode(65 + Math.floor(Math.random() * 26)) // Genera lettere maiuscole casuali A-Z
         ).join('');
-        return `${isoDate}-${randomLetters}`; // Restituisce il codice completo senza trattini
+        return `${isoDate}-${randomLetters}`; // Restituisce il codice completo 
     };
     
-
     // Effetto per caricare i test dal backend all'avvio
     useEffect(() => {
         const fetchData = async () => {
@@ -331,7 +330,7 @@ const Quiz = () => {
     // return per la schermata di inserimento dei dati iniziali
     if (!state.isQuizStarted && !state.isQuizFinished) {
         return (
-            <div className="container mt-4 mb-5 pb-4">
+            <div className="container mt-4 mb-5 pb-4" tabIndex="0">
                 <div className="border rounded p-4 shadow-sm">
                 <h4 className="mb-4">Inserisci i dati per iniziare</h4>
                     <div className="row mb-3">
@@ -386,7 +385,7 @@ const Quiz = () => {
     // return per la schermata di fine quiz
     if (state.isQuizFinished) {
         return (
-            <div className="container mt-4 mb-5">
+            <div className="container mt-4 mb-5" tabIndex="0">
                 <div className="border rounded p-4 shadow-sm">
 
                     {/* Messaggio di fine quiz */}
@@ -474,7 +473,7 @@ const Quiz = () => {
     // return per la schermata delle domande durante il quiz
     const currentQuestion = state.questions[state.currentQuestionIndex]; // Ottiene la domanda corrente in base all'indice attuale
     return (
-        <div className="container mt-4 mb-5">
+        <div className="container mt-4 mb-5" tabIndex="0">
             <div className="border rounded p-4 shadow-sm">
                 <h3 className="mb-4 text-center"><strong>Test: {tests.name}</strong></h3>
 

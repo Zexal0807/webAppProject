@@ -5,6 +5,7 @@ export default function Image({ value, alt, height, width }) {
             src={value}
             alt={alt}
             style={{ height: height, width: width}}
+            tabIndex="0"
         />
     );
 }

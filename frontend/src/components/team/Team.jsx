@@ -3,7 +3,7 @@ import TeamMembers from "../teamMembers/TeamMembers";
 
 export default function Team({ value, members }) {
     return (
-        <div className="container-fluid">
+        <div className="container-fluid" tabIndex="0">
             <div className="row">
                 <div className="col-12 mb-4">
                     <div className="team-component border p-3 rounded shadow-sm">

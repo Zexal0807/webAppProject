@@ -5,7 +5,7 @@ export default function TitleTeam({ value, align }) {
     const alignmentClass = align ? `title-align-${align}` : '';
 
     return (
-        <div className={`title-component p-3 p-sm-4 mb-3 ${alignmentClass}`}>
+        <div tabIndex="0" className={`title-component p-3 p-sm-4 mb-3 ${alignmentClass}`}>
             {value}
         </div>
     );
