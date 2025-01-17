@@ -70,7 +70,7 @@ const Homepage = () => {
                         style={{width: "100%", justifyContent:"center"}}
                         variant="secondary"
                         size="L"
-                        onClick={() => setSelectedEntry(result)}
+                        onClick={() => { setSelectedEntry(result) }}
                       >
                         {result.code}
                       </Button>
@@ -125,14 +125,21 @@ const Homepage = () => {
                 value={selectedEntry.age}
               />
             </div>
-            <div style={{width:"33.3%", paddingRight:"1rem", paddingLeft:"1rem"}}>
+            <div style={{width:"22.2%", paddingRight:"1rem", paddingLeft:"1rem"}}>
               <TextInput
                 label={formatMessage({id:'search-plugin.label.ip'})}
                 disabled={true}
                 value={selectedEntry.IP}
               />
             </div>
-            <div style={{width:"33.3%", paddingLeft:"1rem"}}>
+            <div style={{width:"33.3%", paddingRight:"1rem", paddingLeft:"1rem"}}>
+              <DateTimePicker
+                label={formatMessage({id:'search-plugin.label.execution_time'})}
+                disabled={true}
+                value={selectedEntry.execution_time}
+              />
+            </div>
+            <div style={{width:"10.9%", paddingLeft:"1rem"}}>
               <TextInput
                 label={formatMessage({id:'search-plugin.label.score'})}
                 disabled={true}
@@ -168,7 +175,7 @@ const Homepage = () => {
                 </div>
                 <div style={{width:"8.4%", paddingLeft:"1rem", paddingRight:"1rem"}}>
                   <TextInput
-                label={formatMessage({id:'search-plugin.label.score'})}
+                    label={formatMessage({id:'search-plugin.label.score'})}
                     disabled={true}
                     value={answer.score}
                   />
@@ -182,7 +189,7 @@ const Homepage = () => {
               <DateTimePicker
                 label={formatMessage({id:'search-plugin.label.revision_date'})}
                 disabled={true}
-                initialDate={selectedEntry.revision_date}
+                value={selectedEntry.revision_date}
               />
             </div>
             <div style={{width:"67%", paddingLeft:"1rem"}}>
@@ -191,7 +198,7 @@ const Homepage = () => {
                 onChange={(e) => {
                   setSelectedEntry({ ...selectedEntry, note: e.target.value});
                 }}
-                value={selectedEntry.note}
+                value={selectedEntry.note ? selectedEntry.note : ""}
               />
             </div>
           </div>

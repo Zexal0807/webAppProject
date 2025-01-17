@@ -11,6 +11,7 @@
   "label.sex": "Sesso",
   "label.age": "Età",
   "label.ip": "Indirizzo IP",
+  "label.execution_time": "Data esecuzione",
   "label.score": "Punteggio",
   "label.questions": "Domande",
   "label.revision_date": "Ultima revisione",
