@@ -31,7 +31,9 @@
       "inversedBy": "answers"
     },
     "score": {
-      "type": "integer"
+      "type": "decimal",
+      "max": 1,
+      "min": 0
     }
   }
 }

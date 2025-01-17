@@ -812,7 +812,14 @@ export interface ApiAnswerAnswer extends Schema.CollectionType {
       'manyToOne',
       'api::test-execution.test-execution'
     >;
-    score: Attribute.Integer;
+    score: Attribute.Decimal &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+          max: 1;
+        },
+        number
+      >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
