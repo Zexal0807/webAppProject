@@ -3,7 +3,7 @@ module.exports = {
         const { pageId } = ctx.request.params;
         try {
             const page = await strapi.entityService.findMany('api::page.page', {
-                filters: { slug: pageId },
+                filters: { slug: pageId.replace("slash", "/") },
                 populate: {
                     layouts: {
                         populate: {

@@ -16,7 +16,7 @@ export default function Page() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const url = `${process.env.REACT_APP_BACKEND_HOST}/api/page/${pageId}`;
+			const url = `${process.env.REACT_APP_BACKEND_HOST}/api/page/${pageId.replace("/", "slash")}`;
 
 			const response = await fetch(url, {
 				method: "GET",
