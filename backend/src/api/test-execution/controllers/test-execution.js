@@ -1,11 +1,12 @@
 module.exports = {
     // Metodo per creare una nuova istanza
     async create(ctx) {
-        const { data } = ctx.request.body;
+        let { data } = ctx.request.body;
+        data.IP = ctx.request.ip;
 
         try {
             const newInstance = await strapi.entityService.create('api::test-execution.test-execution', {
-                data,
+                data
             });
 
             ctx.send({ data: newInstance });
