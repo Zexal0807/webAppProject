@@ -182,15 +182,15 @@ const Quiz = () => {
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error("Errore nell'invio dei risultati:", errorData);
-                alert("Errore nell'invio dei risultati.");
+                // alert("Errore nell'invio dei risultati.");
             } else {
                 const data = await response.json();
                 console.log("Risultati inviati con successo:", data);
-                alert("Risultati inviati con successo!");
+                // alert("Risultati inviati con successo!");
             }
         } catch (error) {
             console.error("Errore durante l'invio:", error);
-            alert("Errore durante l'invio dei risultati.");
+            // alert("Errore durante l'invio dei risultati.");
         }
     };
 
