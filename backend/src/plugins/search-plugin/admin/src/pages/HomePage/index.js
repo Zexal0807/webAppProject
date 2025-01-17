@@ -25,7 +25,7 @@ const Homepage = () => {
 
   const handleSave = async (e) => {
     try {
-      const response = await axios.put(`/api/test-execution/${selectedEntry.id}`, {
+      const response = await axios.put(`/api/test-executions/${selectedEntry.id}`, {
         revision_date: new Date(),
         note: selectedEntry.note
       });
