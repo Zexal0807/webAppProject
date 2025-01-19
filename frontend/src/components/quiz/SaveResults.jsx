@@ -7,11 +7,17 @@ export const saveResultsToPDF = (age, sex, code, state, getSexName) => {
     // Imposta dimensioni e margini
     const pageHeight = doc.internal.pageSize.height; // Altezza della pagina
     const pageWidth = doc.internal.pageSize.width; // Larghezza della pagina
-    const margin = 10; // Margine superiore
+    const margin = 10; // Margine 
     const maxWidth = pageWidth - margin * 2; // Larghezza massima per il testo
-    let y = 10; // Posizione verticale iniziale
-    
+    let y = 7; // Posizione verticale iniziale
+
+    // Aggiunge l'immagine (sinistra)
+    const imageWidth = 40; // Larghezza dell'immagine
+    const imageHeight = 40; // Altezza dell'immagine
+    doc.addImage("/images/Logo MISTRA.jpg", "PNG", margin, y, imageWidth, imageHeight);
+
     // Imposta il titolo del PDF
+    y =+ 10;
     doc.setFontSize(16); // Imposta la dimensione del font
     doc.setFont("helvetica", "bold"); // Imposta il font a Helvetica e grassetto
     const title = "Risultati del Quiz";
