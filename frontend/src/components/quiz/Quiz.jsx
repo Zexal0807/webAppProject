@@ -30,33 +30,35 @@ const Quiz = () => {
         return `${isoDate}-${randomLetters}`; // Restituisce il codice completo 
     };
     
-    // Effetto per caricare i test dal backend all'avvio
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const url = `${process.env.REACT_APP_BACKEND_HOST}/api/test`;
+    // Funzione per caricare i test dal backend
+    const fetchData = async () => {
+        try {
+            const url = `${process.env.REACT_APP_BACKEND_HOST}/api/test`;
 
-                // Effettua una richiesta GET per ottenere i dati del quiz
-                const response = await fetch(url, {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${process.env.REACT_APP_FETCH_TOKEN}`,
-                        "Content-Type": "application/json",
-                    },
-                });
+            // Effettua una richiesta GET per ottenere i dati del quiz
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${process.env.REACT_APP_FETCH_TOKEN}`,
+                    "Content-Type": "application/json",
+                },
+            });
 
-                // Se la risposta è positiva, aggiorna lo stato con i test ricevuti
-                if (response.ok) {
-                    const data = await response.json();
-                    setTests(data); // Salva l'intera risposta API
-                } else {
-                    console.error("Errore nella risposta dell'API:", response.statusText);
-                }
-            } catch (error) {
-                console.error("Errore nella fetch:", error);
+            // Se la risposta è positiva, aggiorna lo stato con i test ricevuti
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Test ricevuto dall'API:", data); // Log dei dati ricevuti
+                setTests(data); // Salva l'intera risposta API
+            } else {
+                console.error("Errore nella risposta dell'API:", response.statusText);
             }
-        };
+        } catch (error) {
+            console.error("Errore nella fetch:", error);
+        }
+    };
 
+    // useEffect per caricare i test al primo rendering
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -95,7 +97,6 @@ const Quiz = () => {
                 console.error("Errore nella fetch:", error);
             }
         };
-
         fetchSexData();
     }, []);
 
@@ -169,6 +170,7 @@ const Quiz = () => {
         setCode("");
         setError("");
         setResultsSent(false);
+        fetchData(); // Richiama l'API per ottenere un nuovo test
     };
 
     // return per la schermata di inserimento dei dati iniziali
